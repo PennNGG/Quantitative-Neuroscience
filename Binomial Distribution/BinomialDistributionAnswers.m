@@ -66,13 +66,13 @@ xs = 0:5; % x-axis
 % For each session
 num_sessions = size(data, 1);
 for ii = 1:num_sessions 
-
+   
    % Compute relevant variables
    nx = data(ii,2:end); % the count data
    N  = sum(nx); % the total number of trials
    m  = sum(nx(2:end).*xs(2:end))/N;  % mean
    v  = sum((xs-m).^2.*nx)/N;  % variance
-   p  = 1 - (v/m); % release probabilty 
+   p  = 1 - (v/m); % release probabilty
    n  = m/p; % available quanta per trial
 
    % Set up the plot
