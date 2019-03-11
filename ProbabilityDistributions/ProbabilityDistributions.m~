@@ -214,10 +214,12 @@ N = 1000;
 %  interval: as the number of bins gets larger, the simulation gets closer
 %  to considering events occurring at any time and thus the distribution
 %  gets closer to Poisson
-for n = round(linspace(1,100,20))
+for n = round(linspace(1,50,10))
    
    % Set up the plot
    cla reset; hold on;
+   title(sprintf('n=%d', n))
+   axis([xaxis(1) xaxis(end) 0 max(poissY)+0.1])
    
    % Check for events in each bin
    %
@@ -232,7 +234,7 @@ for n = round(linspace(1,100,20))
    % Make a histogram of the outcomes, using the array of counts ("xaxis")
    %  we defined above. Note that we shift xaxis and add another interval
    %  to the end because histcounts operates on edges of intervals
-   counts = histcounts(outcomes, [xaxis-0.5 xaxis(end)+0.5]);
+   [counts,edges] = histcounts(outcomes, [xaxis-0.5 xaxis(end)+0.5]);
 
    % Show a bar plot of the simulated PDF (i.e., the histogram divided
    %  by the sum of the counts to get probabilities)
@@ -253,15 +255,14 @@ for n = round(linspace(1,100,20))
    plot(xaxis, poissY, 'bo-', 'LineWidth', 2, 'MarkerSize', 10);
 
    % Labels, etc
-   title(sprintf('n=%d', n))
-   axis([xaxis(1) xaxis(end) 0 max(poissY)+0.1])
    title(sprintf('p=%.1f, number bins = %d, number simulations=%d', ...
       p, n, N))
    xlabel(sprintf('Number of successes', n));
    ylabel('Probability');
    legend('Simulated', 'Theoretical binomial', 'Theoretical Poisson')
 
-   r = input('Press <return> to continue')
+   r = input('next')
+%   pause(0.3);
 end
 
 % An interesting property of a Poisson distributon is that var = mean
