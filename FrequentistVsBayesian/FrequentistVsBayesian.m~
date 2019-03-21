@@ -14,7 +14,7 @@
 % "Imagine running an HIV test on population .. of 1000 persons ...
 %  The test has a false positive rate of 5% (0.05) and no false negative rate."
 
-N = 10000; % size of the population
+N = 1000; % size of the population
 falsePositiveRate = 0.05;
 falseNegativeRate = 0;
 
@@ -73,7 +73,49 @@ for ii = 1:length(infectedProportions)
    % The probability that someone with a positive test is infected
    pIsInfectedGivenIsPositiveTest = sum(isInfected&isPositive)./sum(isPositive);
    
-   disp(sprintf('Proportion infected=%.1f, Posterior probabilty of infection, given a positive test=%.3f', ...
-      infectedProportions(ii), pIsInfectedGivenIsPositiveTest))
+   disp(sprintf('
+
+   
 end
 
+
+
+isPositiveTestGivenIsInfected = 
+
+
+binornd(1,1-falseNegativeRate,N,1);
+isPositiveTestGivenNotIsInfected = binornd(1,falsePositiveRate,N,1);
+
+pIsInfected = sum(isInfected)./N;
+pIsInfectedGivenIsPositiveTest = sum(isInfected&isPositiveTest)./sum(isPositiveTest);
+
+
+% Consider first a stqandard
+% POPULATION A
+
+
+nTestPositive = 430;
+nTestNegative = 570;
+
+% p(Infected, testPositive) = p(infected | test
+nUninfectedAndTestPositive = 600;
+nTestPositive = 430;
+
+
+
+
+% open a figure that we will use to plot stuff
+figure
+
+%% Conditional probabilities
+%
+%
+
+%% What is a p-value?
+%
+% The (in)famous p-value is the probability of obtaining the observered 
+%  data given a NULL hypothesis.
+%
+% Let's unpack this.
+%
+% First, let's generate some data
