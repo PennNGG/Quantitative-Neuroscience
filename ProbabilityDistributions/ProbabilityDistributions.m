@@ -17,7 +17,7 @@
 %  - comparing probability distribution functions (pdfs) and 
 %     cumulative distribution functions (cdfs)
 %
-% Copywrite 2019 by Joshua I. Gold, University of Pennsylvania
+% Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
 % open a figure that we will use to plot stuff
 figure
