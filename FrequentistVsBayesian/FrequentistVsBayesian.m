@@ -21,8 +21,9 @@ falseNegativeRate = 0;
 % Question #1: If someone gets a positive test, is it "statistically
 % significant"?
 %
-% Answer: statistical significance is typically measured as "p<0.05", or in
-%  other words p(Null Hypothesis | data) < 0.05. In this case, the Null 
+% Answer: statistical significance from frequentist perspective is 
+%  typically measured as "p<0.05", or in other words we want 
+%  the "likelihood" = p(data | Null Hypothesis) < 0.05. In this case, the Null 
 %  Hypothesis is "not infected", and the data are just the single positive test. 
 %  Therefore, the relvant p-value is simply the false-positive rate: 
 %  p=0.05, which is typically considered "not significant." However, 

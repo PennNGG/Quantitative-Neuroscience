@@ -24,6 +24,10 @@ figure
 
 %% Bernoulli distribution
 %
+%  Canvas Discussion: https://canvas.upenn.edu/courses/1358934/discussion_topics/5121835
+%  Wikipedia: https://en.wikipedia.org/wiki/Bernoulli_distribution
+%  Mathworld: http://mathworld.wolfram.com/BernoulliDistribution.html
+%
 % A single Bernoulli trial: 
 %  outcome = 1 with probabilty p
 %  outcome = 0 with probabilty 1-p
@@ -31,7 +35,8 @@ figure
 %  This is a DISCRETE distribution because by definition it only takes on
 %  specific, discrete values (in this case either 0 or 1)
 
-% Can use rand, which produces random variable on interval (0,1)
+% We can use rand, which produces a random variable on the interval (0,1)
+%  -- which means that all values are greater than 0 and less than 1
 p = 0.7; % choose value for p
 outcome = rand() <= p; % create logical variable from single pick
 
@@ -55,6 +60,10 @@ disp(sprintf('%d zeros, %d ones, simulated p = %.2f, empirical p = %.2f', ...
    sum(outcomes==0), sum(outcomes==1), p, sum(outcomes==1)/N))
 
 %% Binomial distribution
+%
+%  Canvas Discussion: https://canvas.upenn.edu/courses/1358934/discussion_topics/5002068
+%  Wikipedia: https://en.wikipedia.org/wiki/Binomial_distribution
+%  Mathworld: http://mathworld.wolfram.com/BinomialDistribution.html
 %
 % Distribution of the number of successful outcomes for a given number 
 %  of Bernoulli trials, defined by two parameters:
@@ -159,9 +168,16 @@ edges = -0.5:10.5;
 counts = histcounts(outcomes, edges);
 
 % Show a bar plot of the cdf (the cumulative sum of the normalized counts)
+% Clear the figure
 clf;
+% Set up the x axis based on the edges
 xs = edges(1:end-1)+diff(edges)/2;
-bar(xs, cumsum(counts./sum(counts)));
+% Compute the cumulative sum of the counts normalized by the total counts
+%  (so it is a probability function and not just a histogram -- note that
+%  the final value in the cdf should equal 1 because every value should be
+%  equal to or less than that value).
+scounts = cumsum(counts./sum(counts));
+bar(xs, scounts);
 
 % Compare it to the real binomial cumulative distribution, 
 %  which we find using binocdf
@@ -177,24 +193,38 @@ legend('Simulated', 'Theoretical')
 
 %% Poisson distribution
 %
+%  Canvas Discussion: https://canvas.upenn.edu/courses/1358934/discussion_topics/5130868
+%  Wikipedia: https://en.wikipedia.org/wiki/Poisson_distribution
+%  Mathworld: http://mathworld.wolfram.com/PoissonDistribution.html
+%
 % The Poisson distribution is closely related to the binomial distribution.
 % In both cases, they measure the number of "successes" (or binary events)
 %  within a given interval. For the binomial distribution, these events
 %  occur within discrete "attempts" (that is, within individaul Bernoulli
-%  trials). For the Poisson distribution, these events can occur at any
+%  trials) that we assume occur at regularly spaced times throughout the
+%  full interval. For the Poisson distribution, these events can occur at any
 %  time in the interval. Thus, the Poisson distribution describes the case
-%  in which the intervals between Bernoulli trials -> zero (and p is
-%  realtively small).
+%  in which the time between Bernoulli "attempts" or trials -> zero (the 
+%  "->" reads as "approaches"). This is equivalent to saying that the number
+%  of attempts approaces infinity. 
 %
 % This is a CONTINUOUS distribution because it describes the probability of
 %  any possible time of an event occurring within the given interval.
 
 % Let's examine the relationship between the Poisson pdf and binomial pdf 
 %  by introducing the concept of a Poisson point process (PPP). A PPP is 
-%  a process that generates binary events at a constant rate lambda. The 
-%  number of events that the PPP generates in a given interval is a random 
+%  a process that generates binary events at a constant RATE lambda. The
+%  key here is that time is contininuous, so probability cannot be
+%  determined with respect to a fixed time but rather a fixed time
+%  interval (because any fixed time is infinitesimally small). 
+%  Thus, we think of events occuring at some rate (mean number of
+%  events per unit time) as opposed to a probability (probability of
+%  occurrance of the event at a given time).
+%  The number of events that the PPP generates in a given interval is a random 
 %  variable that is distributed as a Poisson pdf (i.e., a PPP is a way of 
 %  generating a Poisson PDF).
+%
+% See: https://en.wikipedia.org/wiki/Poisson_point_process
 
 % The Poisson process is defined by a rate, lambda, of events/sec
 lambda = 1;
@@ -308,7 +338,7 @@ lambda = 1;    % Rate (events per sec)
 nBinsPerSecond = 100;  % Number of bins in which to check for events
 totalBins = round(nBinsPerSecond*deltaT);
 
-% Now simulate a different way... make an array of nBins filled with zeros,
+% Now simulate a different way... make an array of n bins filled with zeros,
 % then loop through and in each bin check if the event happened or not
 outcomes = zeros(totalBins, 1);
 
@@ -326,7 +356,13 @@ end
 % Check that the nubmer of events is what we expect
 disp([lambda*deltaT sum(outcomes==1)])
 
-% Now look at the histogram of intervals between events
+% Now for the next part -- instead of looking at the counts per interval,
+%  which is what the Poisson distribution described, we are now going to
+%  look at the same data but are considering the intervals between events.
+%  As you will see below, these intervals are distributed as an
+%  exponential.
+%
+% First look at the histogram of intervals between events
 % Get intervals
 intervalsBetweenEvents = diff(find(outcomes));
 
@@ -342,22 +378,28 @@ ylabel('Count')
 
 %% Exponential distribution
 %
+%  Canvas: https://canvas.upenn.edu/courses/1358934/discussion_topics/5130869
+%  Wikipedia: https://en.wikipedia.org/wiki/Exponential_distribution
+%  Mathworks: http://mathworld.wolfram.com/ExponentialDistribution.html
+%
 % This distribution describes the frequency of occurrence of CONTINUOUS
 %  events that decays exponentially with larger values.
 
 % Start by comparing the simulated exponential from above to the formal pdf
-% mu (mean) of the pdf is the inverse rate
+% mu (mean) of the exponential pdf is the inverse of the Poisson rate
 cla reset; hold on;
 
 % Get the histogram
 [N,X] = hist(intervalsBetweenEvents, 50);
 
-% Here interval (the x-axis of the histogram) is a continuous
+% Here the interval (the x-axis that is binned in the histogram to visualize
+%  it, but the actual values can take on any continuous value because they
+%  represent the amount of time since the previous event) is a continuous
 %  variable, so to normalize the histogram to make a pdf we
 %  can't just sum the values -- we have to sum the values multiplied by the
 %  bin width (i.e., take the integral). We use matlab's "trapz" which
 %  treats each bin as a trapezoid (because the heights before and after can
-%  be slightly different) to compute the integral
+%  be slightly different) to compute the integral:
 normalizedIntervals = N./trapz(X, N);
 bar(X,normalizedIntervals);
 
@@ -374,14 +416,15 @@ legend('Simulated', 'Theoretical')
 %
 % Here's a better way to simulate a Poisson process: instead of
 % approximating continuous time with small time bins, directly simulate the
-% time between events as an exponential
+% (continuous) time between events as an exponential
 lambda = 2; % events/sec
 M = 5000; % events/run
 N = 1000; % number of runs
 
 % The mean of the (exponential) distribution of intervals between events
 %  generated by a Poisson process is equal to the inverse of the rate at 
-%  which the events are generated
+%  which the events are generated (because time/event is the inverse of
+%  events/time)
 mu = 1/lambda; 
 
 % Simulate a bunch of intervals picked from an exponential distribution
@@ -397,7 +440,9 @@ minTime = min(times(end,:));
 % Count the times less than the min interval per run
 counts = sum(times<=minTime)';
 
-% Check mean, var
+% Check mean, var (for a simulated Posson process, the mean and var should
+% be pretty close to each other -- where "pretty close" is going to depend
+% on factors like N and M)
 disp(sprintf('lambda*deltaT = %.2f, mean = %.2f, var = %.2f', ...
    lambda*minTime, mean(counts), var(counts)))
 
@@ -457,6 +502,10 @@ xlabel('Time from prior event (sec)')
 ylabel('Hazard rate of event occurring')
 
 %% Normal (Gaussian) distribution
+%
+% Canvas: https://canvas.upenn.edu/courses/1358934/discussion_topics/5121851
+% Wikipedia: https://en.wikipedia.org/wiki/Normal_distribution
+% Mathworks: http://mathworld.wolfram.com/GaussianFunction.html
 %
 % This is another CONTINOUS distribution that describes the relative 
 %  frequencies of occurrence of continuous values following a bell-shaped
