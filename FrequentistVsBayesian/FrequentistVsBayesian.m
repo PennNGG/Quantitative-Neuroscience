@@ -8,11 +8,16 @@
 % Frequentist does not consider the probability of an event or state of the
 % world or hypothesis, only their frequency of occurrance, it is not possible 
 % to ask questions of the form "what is the probabilty that hypothesis x is
-% true?" Instead, one can only consider quesitons of the form, "what is the
+% true?" Instead, one can only consider questions of the form, "what is the
 % probabilty that I would have obtained my data, given that hypothesis x
 % is true?" In contrast, Bayesians consider the probabilities of such
 % things (often called the strength of belief), but doing so can require
 % making assumptions that can be difficult to prove.
+%
+% For NGG students, this tutorial is meant to be used in tandem with this
+% Discussion on the NGG Canvas site:
+%
+%  https://canvas.upenn.edu/courses/1358934/discussion_topics/5440322
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
