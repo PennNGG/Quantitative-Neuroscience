@@ -1,7 +1,6 @@
 % Frequentist versus Bayesian Statistics
 %
-% To use this tutorial, read the commands and
-%  execute the code line-by-line.
+% To use this tutorial, read the commands and execute the code line-by-line.
 %
 % The learning objective is to gain insights into thinking about inference
 % from a "Frequentist" versus a "Bayesian" perspective. In brief, because a
@@ -17,7 +16,7 @@
 % For NGG students, this tutorial is meant to be used in tandem with this
 % Discussion on the NGG Canvas site:
 %
-%  https://canvas.upenn.edu/courses/1358934/discussion_topics/5440322
+% https://canvas.upenn.edu/courses/1358934/discussion_topics/5440322
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 

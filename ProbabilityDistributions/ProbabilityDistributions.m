@@ -1,7 +1,6 @@
 % Probability distributions
 %
-% To use this tutorial, read the commands and
-%  execute the code line-by-line.
+% To use this tutorial, read the commands and execute the code line-by-line.
 %
 % The learning objectives are to gain insights into:
 %  - how to pseudo-randomly sample from probability distributions in Matlab

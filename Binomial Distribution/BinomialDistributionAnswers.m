@@ -1,7 +1,9 @@
 % Bionmial Distributions
 % Answers to exercises
 %
-% Created 09/21/18 by Joshua I Gold
+% Copyright 2019 by Joshua I. Gold, University of Pennsylvania
+%  Created 09/21/18
+%  Updated 12/31/19
 
 %% Exercise 1
 % Note that omitting the semicolon at the end of a line causes the output

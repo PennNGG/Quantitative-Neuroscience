@@ -1,7 +1,8 @@
 % Exact Bionmial Test
 % Answers to exercises
 %
-% Created 09/29/18 by Joshua I Gold
+% Copyright 2019 by Joshua I. Gold, University of Pennsylvania
+%  Created 09/29/18
 
 %% Exercise 2: 
 %  5. 

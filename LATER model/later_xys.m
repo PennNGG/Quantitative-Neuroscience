@@ -1,8 +1,10 @@
-function [xvals_, yvals_] = reciprobit_xys(rts)
-% function [xvals_, yvals_] = reciprobit_xys(rts)
+function [xvals_, yvals_] = later_xys(rts)
+% function [xvals_, yvals_] = later_xys(rts)
 %
 % Compute x (-1./rt) and y (probit) values
 %   from RT distribution
+%
+% Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
 if nargin < 1 || isempty(rts)
     xvals_ = [];
