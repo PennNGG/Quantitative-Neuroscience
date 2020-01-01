@@ -1,5 +1,6 @@
 % Exact Bionmial Test
-% Answers to exercises
+% Answers to exercises found here: 
+%  https://canvas.upenn.edu/courses/1358934/discussion_topics/5012730
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 %  Created 09/29/18
