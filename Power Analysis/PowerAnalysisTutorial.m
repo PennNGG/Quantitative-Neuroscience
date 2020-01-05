@@ -29,21 +29,23 @@
 %  than the original study, and a power calculation will help to decide 
 %  the required size of the replication sample.
 
-% Recreate the figure, with notes and simulations
+% Recreate the figure (mostly), with notes, simulations, and additions
 figure
 
 % Assume that an original study identified an effect size, representing
 %  the difference in the mean value of a test distribution versus a 
 %  null distribution, divided by their common standard deviation (i.e., 
-%  the z-score of their difference), at exactly p=0.05. For a two-tailed 
-%  test, this p-value implies that 0.975 of the area of the null 
+%  the z-score of their difference), at exactly p=0.05. 
+% Remember that these are distributions of mean values, so the standard
+%  deviations of these distributions represent standard errors of the mean.
+% For a two-tailed test, this p-value implies that 0.975 of the area of the null 
 %  distribtion is less than the effect size:
 effectSize = norminv(0.975);
 
-% We can now reproduce the figure:
-subplot(3,1,1); cla reset; hold on;
+% We can now reproduce the first panel:
+subplot(4,1,1); cla reset; hold on;
 mu0 = 0;
-sem = 1;
+sem = 1; % make it easy by assuming sem=1
 mu1 = effectSize.*sem;
 binsz = 0.01;
 xax = -4:binsz:6;
@@ -55,39 +57,55 @@ plot(xax, normpdf(xax, mu1, sem), 'b--');
 % Now what happens when we try to replicate the result under the exact same
 % conditions? Let's simulate N experiments:
 N = 10000;
-% in each case, we end up with a mean value that comes from the
+
+% In each simulated experiment, we end up with a mean value that comes from the
 % experimental distribution, and we only reject the Null hypothesis if the
 % value is greater than or equal to the previous effect size:
 outcomes = normrnd(mu1, sem, N, 1);
-LpositiveOutcomes = outcomes >= mu1;
-disp(sprintf('%d positive outcomes out of %d experiments = %.2f pct', ...
+LpositiveOutcomes = outcomes >= effectSize;
+disp(sprintf('%d positive outcomes out of %d experiments (%.2f pct)', ...
    sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100))
 
-% A power of 50%! Put another way, we would expect this power by doing an
-% experiment with N=1, which results in a 50/50 chance that we'll get a
-% result>cutoff
-sampsizepwr('z', [0 1], 1.96, 0.5)
-
 % We can plot these results as a normalized histogram
-subplot(3,1,2); cla reset; hold on;
-plot(mu0.*[1 1], [0 0.45], 'k-');
-plot(mu1.*[1 1], [0 0.45], 'k-');
-plot(xax, normpdf(xax, mu0, sem), 'b-');
-plot(xax, normpdf(xax, mu1, sem), 'b--');
+subplot(4,1,2); cla reset; hold on;
 NnoEffect = hist(outcomes(~LpositiveOutcomes), xax);
 Neffect   = hist(outcomes(LpositiveOutcomes), xax);
 h1=bar(xax, NnoEffect./(sum(NnoEffect)+sum(Neffect))./binsz);
 set(h1, 'EdgeColor', [0.9 0.9 0.9])
 h2=bar(xax, Neffect./(sum(NnoEffect)+sum(Neffect))./binsz);
 set(h2, 'EdgeColor', [0.1 0.1 0.1])
+plot(mu0.*[1 1], [0 0.45], 'k-');
+plot(mu1.*[1 1], [0 0.45], 'k-');
+plot(xax, normpdf(xax, mu0, sem), 'b-');
+plot(xax, normpdf(xax, mu1, sem), 'b--');
 
-% We can increase the power by increasing the signal-to-noise ratio of our
-% sample; i.e., reduce the sem, assuming the same mean effect size. The
-% figure in the paper is confusing, because increasing N would narrow both
-% distributions, explaining why you would be less likely to reject the Null
-% hypothesis for the same effect size. Let's plot what they should look
-% like for 80% power -- that is, what is the sem when 80% of the effect
-% distribution is >= the p=0.05 cutoff for the null distribution
+% We can increase the power by increasing the signal-to-noise ratio (SNR) 
+%  of our sample, via a reduction in sem and assuming the same mean effect 
+%  size. The figure in the paper is confusing, because increasing SNR would 
+%  narrow *both* distributions (because we assume that the two hypotheses
+%  differ only by their mean value, not the STD of the distributions). It
+%  is the change in both distributions that explains why you would be less 
+%  likely to reject the Null hypothesis for the same effect size under
+%  these conditions.
+%  
+% Also note that sem depends on both the number of samples (N) and the 
+%  STD of the sampled distribution, so we need to define N or STD to be 
+%  able to express sem in terms of the other of those two values.
+%
+% We can use a power analysis to find the new sem. The key point is that a
+%  power analysis described a relationship between the effect size and the
+%  power -- so we can define a particular power to compute the effect size.
+%  In this case, this is equivalent to doing a z test with one sample and a
+%  power of 80%:
+newEffectSize = sampsizepwr('z', [0 1], [], 0.8, 1);
+
+% This effect size is again the z-score, given the existing mean difference
+%  and the new sem -- so we can use it to compute the new sem:
+newSEM = (mu1-mu0)./newEffectSize;
+
+% To show that this is the case, let's try a bunch of sems and find the
+%  value that corresponds to when 80% of the effect distribution is >= 
+%  the p=0.05 cutoff for the null distribution
 
 % Try a bunch of sems, smaller than before (i.e., <1)
 sems = 0:0.01:1;
@@ -96,7 +114,7 @@ vals = zeros(length(sems), 1);
 % Loop through them
 for ss = 1:length(sems)
    
-   % The probability of not rejecting the null hypothesis when the null
+   % The probability of not rejecting the null hypothesis when the nullry a
    %  hypothesis is false is the mass of the effect distribution, which
    %  still has a mean value of effectSize but now has the given sem, that
    %  is to the right of the new cutoff    
@@ -105,9 +123,30 @@ for ss = 1:length(sems)
 end
 
 % Plot it
-subplot(3,1,3); cla reset; hold on;
+subplot(4,1,3); cla reset; hold on;
 plot(sems, vals, 'ko');
-semVal = sems(find(vals<=0.8, 1));
-plot(semVal.*[1 1], [0 0.8], 'r-', 'LineWidth', 2);
-plot([0 semVal], [0.8 0.8], 'r-', 'LineWidth', 2);
+valIndex = find(vals<=0.8, 1);
+newSEM2 = sems(valIndex);
+plot(newSEM2.*[1 1], [0 0.8], 'r-', 'LineWidth', 2);
+plot([0 newSEM2], [0.8 0.8], 'r-', 'LineWidth', 2);
+plot(newSEM, 0.8, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 10);
+
+% Now do the simulated experiments as above, but with the new distributions
+outcomes = normrnd(mu1, newSEM, N, 1);
+LpositiveOutcomes = outcomes >=  norminv(0.975, mu0, newSEM);
+disp(sprintf('New sem=%.2f: %d positive outcomes out of %d experiments (%.2f pct)', ...
+   newSEM, sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100))
+
+% Show it as normalized histograms
+subplot(4,1,4); cla reset; hold on;
+NnoEffect = hist(outcomes(~LpositiveOutcomes), xax);
+Neffect   = hist(outcomes(LpositiveOutcomes), xax);
+h1=bar(xax, NnoEffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+set(h1, 'EdgeColor', [0.9 0.9 0.9])
+h2=bar(xax, Neffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+set(h2, 'EdgeColor', [0.1 0.1 0.1])
+plot(mu0.*[1 1], [0 0.45], 'k-');
+plot(mu1.*[1 1], [0 0.45], 'k-');
+plot(xax, normpdf(xax, mu0, newSEM), 'b-');
+plot(xax, normpdf(xax, mu1, newSEM), 'b--');
 
