@@ -48,7 +48,7 @@ outcome = binornd(n,p);
 
 % Check that we are generating the probability correctly by generating a
 % lot of trials and testing if the outcome is as expected.
-N = 1000; % Generate a lot of trials
+N = 10000; % Generate a lot of trials
 outcomes = zeros(N,1); % pre-allocate a big array
 for ii = 1:N % loop through the trials
    outcomes(ii) = binornd(n,p);
