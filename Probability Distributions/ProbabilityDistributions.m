@@ -446,7 +446,7 @@ disp(sprintf('lambda*deltaT = %.2f, mean = %.2f, var = %.2f', ...
    lambda*minTime, mean(counts), var(counts)))
 
 % Now let's consider the "Randomness" of this process in more detail.
-% We say that it has a "flat hazard funtion": at any given point in time, 
+% We say that it has a "flat hazard function": at any given point in time, 
 %  there is an equal probabilty of the event occuring, given that it 
 %  hasn't occurred yet. We can compute this function from the simulated 
 %  intervals as the pdf/(1-cdf) [that is, the probability of a given 

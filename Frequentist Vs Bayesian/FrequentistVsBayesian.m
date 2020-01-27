@@ -114,7 +114,7 @@ pIsInfectedGivenIsPositiveTest = sum(isInfected&isPositive)./sum(isPositive);
 % Why is this the case? It is a simple consequence of the definition of 
 % a conditional probability, formulated as Bayes' Rule. Specifically,
 % the joint probability of two events, call them A and B, is defined as:
-% p(A and B) = p(A) * p(A | B)
+% p(A and B) = p(A) * p(B | A)
 % p(B and A) = p(B) * p(A | B)
 %
 % Now, calling A the Hypothesis and B the Data, then rearranging, we
