@@ -53,6 +53,8 @@ plot(mu0.*[1 1], [0 0.45], 'k-');
 plot(mu1.*[1 1], [0 0.45], 'k-');
 plot(xax, normpdf(xax, mu0, sem), 'b-');
 plot(xax, normpdf(xax, mu1, sem), 'b--');
+xlabel('value');
+ylabel('probability');
 
 % Now what happens when we try to replicate the result under the exact same
 % conditions? Let's simulate N experiments:
@@ -78,6 +80,8 @@ plot(mu0.*[1 1], [0 0.45], 'k-');
 plot(mu1.*[1 1], [0 0.45], 'k-');
 plot(xax, normpdf(xax, mu0, sem), 'b-');
 plot(xax, normpdf(xax, mu1, sem), 'b--');
+xlabel('value');
+ylabel('probability');
 
 % We can increase the power by increasing the signal-to-noise ratio (SNR) 
 %  of our sample, via a reduction in sem and assuming the same mean effect 
@@ -93,7 +97,7 @@ plot(xax, normpdf(xax, mu1, sem), 'b--');
 %  able to express sem in terms of the other of those two values.
 %
 % We can use a power analysis to find the new sem. The key point is that a
-%  power analysis described a relationship between the effect size and the
+%  power analysis describes a relationship between the effect size and the
 %  power -- so we can define a particular power to compute the effect size.
 %  In this case, this is equivalent to doing a z test with one sample and a
 %  power of 80%:
@@ -114,7 +118,7 @@ vals = zeros(length(sems), 1);
 % Loop through them
 for ss = 1:length(sems)
    
-   % The probability of not rejecting the null hypothesis when the nullry a
+   % The probability of not rejecting the null hypothesis when the null
    %  hypothesis is false is the mass of the effect distribution, which
    %  still has a mean value of effectSize but now has the given sem, that
    %  is to the right of the new cutoff    
@@ -130,6 +134,9 @@ newSEM2 = sems(valIndex);
 plot(newSEM2.*[1 1], [0 0.8], 'r-', 'LineWidth', 2);
 plot([0 newSEM2], [0.8 0.8], 'r-', 'LineWidth', 2);
 plot(newSEM, 0.8, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 10);
+xlabel('sem');
+ylabel('probability false negative');
+
 
 % Now do the simulated experiments as above, but with the new distributions
 outcomes = normrnd(mu1, newSEM, N, 1);
@@ -149,4 +156,5 @@ plot(mu0.*[1 1], [0 0.45], 'k-');
 plot(mu1.*[1 1], [0 0.45], 'k-');
 plot(xax, normpdf(xax, mu0, newSEM), 'b-');
 plot(xax, normpdf(xax, mu1, newSEM), 'b--');
-
+xlabel('value');
+ylabel('probability');
