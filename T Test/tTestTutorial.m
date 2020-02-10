@@ -10,7 +10,7 @@ STD = 1;
 
 % Get random samples
 N = 10;
-X = normrnd(MU, sqrt(STD), N, 1);
+X = normrnd(MU, STD, N, 1);
 
 % Compute the sample mean
 Xbar = mean(X);
@@ -28,7 +28,7 @@ t = Xbar*sqrt(N)/S;
 p = 2.*(1-tcdf(t, N-1));
 
 % Compare to what we get from ttest
-[~,P,~,STATS] = ttest(X);
+[hello,P,another,STATS] = ttest(X);
 
 disp(sprintf('t statistic = %.4f (computed) %.4f (from ttest)', t, STATS.tstat))
 disp(sprintf('p           = %.4f (computed) %.4f (from ttest)', p, P))
@@ -57,6 +57,16 @@ Dbar = mean(D);
 
 % Compute the sample std of the difference
 SD = std(D);
+
+% Note that X1 and X2 are highly correlated, so the variance (or std) of the
+% difference needs to take into account the covariance
+% var(X2 - X1) = cov(X2 - X1, X2 - X1)
+%              = cov(X2, X2) + cov(X1, X1) - cov(X2, X1) - cov(X1, X2)
+%              = var(X2) + var(X1) - cov(X2,X1) - cov(X1,X2)
+plot(X1, X2, 'ko', 'MarkerFaceColor', 'k');
+vals = cov(X1, X2);
+disp(sprintf('variance of D=%.4f, computed as variance of sum=%.4f', ...
+   var(D), vals(1,1) + vals(2,2) - vals(1,2) - vals(2,1)))
 
 % Compute the t-statistic 
 tD = Dbar*sqrt(N)/SD;
