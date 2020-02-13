@@ -28,7 +28,7 @@ t = Xbar*sqrt(N)/S;
 p = 2.*(1-tcdf(t, N-1));
 
 % Compare to what we get from ttest
-[hello,P,another,STATS] = ttest(X);
+[~,P,~,STATS] = ttest(X);
 
 disp(sprintf('t statistic = %.4f (computed) %.4f (from ttest)', t, STATS.tstat))
 disp(sprintf('p           = %.4f (computed) %.4f (from ttest)', p, P))

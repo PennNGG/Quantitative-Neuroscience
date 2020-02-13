@@ -82,7 +82,7 @@ for n = 2:max_n
    % set/label axes
    axis([-4 4 0 0.5]);
    set(gca, 'FontSize', 12);
-   xlabel('Mean value (t units)')
+   xlabel('Value (t units)')
    ylabel('probability')
 
    subplot(4,1,1);
