@@ -29,7 +29,7 @@ rXY         = SCOVXY/(sqrt(SSEX)*sqrt(SSEY));
 rYX         = SCOVXY/(sqrt(SSEY)*sqrt(SSEX));
 
 % Use corrcoef
-rBuiltIn    = corrcoef(WingLength, TailLength);
+rBuiltIn = corrcoef(WingLength, TailLength);
 
 % Show that they are all the same
 disp(sprintf('rXY=%.4f (computed), %.4f (built-in)', rXY, rBuiltIn(1,2)))
@@ -37,6 +37,7 @@ disp(sprintf('rYX=%.4f (computed), %.4f (built-in)', rYX, rBuiltIn(2,1)))
 
 %% 3. Compute standard error/confidence intervals
 %
+% Use formulas in the Canvas discussion
 
 % Compute standard error directly 
 standard_error_r = sqrt((1-rXY^2)/(n-2));
@@ -62,14 +63,38 @@ disp(sprintf('sem=%.4f, 95 pct CI = [%.4f %.4f]', standard_error_r, CI95(1), CI9
 % Two-tailed test
 % Remember that the *mean* of r follows a Student's t distribution 
 %  with two degrees of freedom
-tVal = rXY/standard_error_r; % Compute t statistic
-prob = 2*(1-tcdf(tVal,n-2)); % Compute p, using n-2 degrees of freedom and two-tailed
+
+% First compute the t-statistic, which is the sample r divided by the 
+%  sample standard error
+tVal = rXY/standard_error_r;
+
+% Now compute the p-value. We want the probabily of getting a value of
+%  the test statistic that is *at least as large* as the one that we
+%  actually measured from our sample (i.e., tVal), given the null
+%  distribution. Here we define the null distribution as the t distribution 
+%  with n-2 degrees of freedom (recall that the t-distribution for a 
+%  "regular" t-test has n-1 degrees of freedom... here it's n-2 because 
+%  we have two samples, X and Y). Because we are using a two-tailed test, 
+%  this p-value is equal to twice the area under the null t distribution 
+%  that is greater than tVal. The cumulative distribution is the area that
+%  is less than a particular value, so we want 1-cdf
+prob = 2*(1-tcdf(tVal,n-2));
+
+% Print it nicely
 disp(sprintf('p=%.4f for H0: r=0', prob))
 
 %% 5. Is this r value different than r=0.75 
-% Two-tailed test
+% Here we use a z-test on the z-transformed values, as described in the
+%  Canvas discussion
+
+% z-transform the new referent
 zYale  = 0.5*log((1+0.75)/(1-0.75));
-lambda = (z-zYale)/sqrt(1/(n-3));
+
+% Compute the text statistic as the difference in z-transformed values,
+%  divided by the sample standard deviation
+lambda = (z-zYale)/z_std;
+
+% Get a p-value from a two-tailed test
 prob2 = 2*(1-normcdf(lambda));
 disp(sprintf('p=%.4f for H0: r=0.75', prob2))
 
@@ -95,18 +120,22 @@ power = sampsizepwr('z', [0 1], lambda, [], 1)
 % Calculate the n needed to ensure that H0 (r=0) is rejected 99% of the time
 %  when |r|>= 0.5 at a 0.05 level of significance
 %
-% power = 1-normcdf(zCriterion-lambda)
-% 1 - power = normcdf(zCriterion-lambda)
-% zCriterion-lambda = norminv(1 - power)
-% lambda  = zCriterion - norminv(1 - power)
-% (z-zRef)/sqrt(1/(n-3)) = zCriterion - norminv(1 - power)
-% sqrt(1/(n-3)) = (z-zRef) / (zCriterion - norminv(1 - power))
-% n = (z-zRef) / (zCriterion - norminv(1 - power))^2
+% Derivation:
+%  power = 1-normcdf(zCriterion-lambda)
+%  1 - power = normcdf(zCriterion-lambda)
+%  zCriterion-lambda = norminv(1 - power)
+%  lambda  = zCriterion - norminv(1 - power)
+%  (z-zRef)/sqrt(1/(n-3)) = zCriterion - norminv(1 - power)
+%  sqrt(1/(n-3)) = (z-zRef) / (zCriterion - norminv(1 - power))
+%  n = 1/((z-zRef) / (zCriterion - norminv(1 - power)))^2+3
 desiredPower = 0.99;
-predictedN = round(1./((z-zRef) / (zCriterion - norminv(1-desiredPower)))^2+3)
+predictedN = ceil(1/((z-zRef) / (zCriterion - norminv(1-desiredPower)))^2+3)
 
 
-% 
+
+
+%%
+% Junk below
 % 
 % v=n-2;
 % 
