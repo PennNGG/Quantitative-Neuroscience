@@ -1,0 +1,1 @@
+function jigax(ax, sz)% function jigax(ax, font_size)% fix up axes the way I like themif nargin > 1  set(ax,'TickDir','out','FontSize',sz,'Box','off');else  set(ax,'TickDir','out','FontSize',14,'Box','off');end

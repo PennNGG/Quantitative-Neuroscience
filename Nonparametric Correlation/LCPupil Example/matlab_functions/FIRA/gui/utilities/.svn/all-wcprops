@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities
+END
+checkGUI_editValue.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/checkGUI_editValue.m
+END
+getGUI_pmString.m
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/getGUI_pmString.m
+END
+gsGUI_ecodeValuesByName.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_ecodeValuesByName.m
+END
+gsGUI_selectSpike.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_selectSpike.m
+END
+gsGUI_ecodeIDsByName.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_ecodeIDsByName.m
+END
+getGUI_FIRAparams.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/getGUI_FIRAparams.m
+END
+gsGUI_ecodeTimesByName.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_ecodeTimesByName.m
+END
+gsGUI_analogByName.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_analogByName.m
+END
+gsGUI_selectTrials.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_selectTrials.m
+END
+gsGUI_selectByUniqueID.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_selectByUniqueID.m
+END
+gsGUI_saveSettings.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_saveSettings.m
+END
+gsGUI_spikeByID.m
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/1/trunk/FIRA/gui/utilities/gsGUI_spikeByID.m
+END

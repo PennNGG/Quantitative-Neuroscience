@@ -1,0 +1,1 @@
+function L = blh(x,bins)% quick approx to binlikehist.m  I don't have it with menb = length(bins);bw = bins(2)-bins(1);binLo = bins - bw/2;binHi = bins + bw/2;binLo(1) = -inf;binHi(end) = inf;L = logical(repmat(0,length(x),length(bins)));for i = 1:nb	L(:,i) = x>=binLo(i) & x<binHi(i);end

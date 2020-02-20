@@ -1,0 +1,1 @@
+function ppfig(fig)% function ppfig(fig)%% Sets up a figure positioned on the top right-hand side of the% screen with the dimensions of a power-point slideif nargin < 1  fig = figure;endset(fig, 'PaperUnits', 'inches', 'PaperPosition', [1 1 10 8]);r = get(fig, 'Position');r(1:2)=[5 145];set(fig, 'Position', r);wysiwyg;

@@ -1,0 +1,6 @@
+FIRA/plexon
+
+Commands for dealing with Plexon communications/data.
+Basically all are used for converting plexon data into
+the global RAWD data struct, which can then be converted
+into FIRA

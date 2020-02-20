@@ -1,0 +1,1 @@
+function ranks_ = rankdata(data)% function ranks_ = rankdata(data)%% returns the ranks of an array of numberssorts = sort(data);ranks_ = nans(length(sorts), 1);for i = 1:length(sorts)  ranks_(i) = find(data(i)==sorts);end

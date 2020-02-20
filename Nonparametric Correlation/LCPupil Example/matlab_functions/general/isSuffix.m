@@ -1,0 +1,1 @@
+function ret_ = isSuffix(name, suffix)% function ret_ = isSuffix(name, suffix)% returns 1 if "suffix" is the suffix of "name"%         0 otherwise[p,f,e] = fileparts(name);if strcmp(e, suffix)    ret_ = true;else    ret_ = false;end

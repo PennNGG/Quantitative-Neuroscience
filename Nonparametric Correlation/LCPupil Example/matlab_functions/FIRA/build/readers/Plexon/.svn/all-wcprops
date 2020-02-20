@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/134/trunk/FIRA/build/readers/Plexon
+END
+connectPLX_loop.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1/trunk/FIRA/build/readers/Plexon/connectPLX_loop.m
+END
+getPLX_analogNames.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/34/trunk/FIRA/build/readers/Plexon/getPLX_analogNames.m
+END
+parsePLX_aData.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1/trunk/FIRA/build/readers/Plexon/parsePLX_aData.m
+END
+readPLX_nexFile.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/128/trunk/FIRA/build/readers/Plexon/readPLX_nexFile.m
+END
+connectPLX.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/134/trunk/FIRA/build/readers/Plexon/connectPLX.m
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/1/trunk/FIRA/build/readers/Plexon/README
+END
