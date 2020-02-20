@@ -1,0 +1,1 @@
+function err_ = quickT2_err(params)global Dataps = quickT2_val(Data(:,1:end-1), params);% Now calculate the joint probability of obtaining the data set conceived as% a list of Bernoulli trials.  This is just ps for trials = 1 and 1-ps for% trials of 0.p       = [ps(Data(:,end)==1); 1-ps(Data(:,end)==0)];p(p==0) = 0.001;err_    = -sum(log(p));			% minus log likelihood

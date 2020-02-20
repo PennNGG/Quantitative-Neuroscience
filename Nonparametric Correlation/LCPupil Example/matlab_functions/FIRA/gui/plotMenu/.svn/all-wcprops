@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu
+END
+plotGUI_neurometricROCT.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_neurometricROCT.m
+END
+plotGUI_polarTC.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_polarTC.m
+END
+plotGUI_deviations.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_deviations.m
+END
+plotGUI_scatter.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_scatter.m
+END
+plotGUI_eyePosition.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_eyePosition.m
+END
+plotGUI_psychometric.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_psychometric.m
+END
+plotGUI_summary.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_summary.m
+END
+plotGUI_neurometricROC.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_neurometricROC.m
+END
+plotGUI_raster.m
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_raster.m
+END
+plotGUI_quickT.m
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/1/trunk/FIRA/gui/plotMenu/plotGUI_quickT.m
+END

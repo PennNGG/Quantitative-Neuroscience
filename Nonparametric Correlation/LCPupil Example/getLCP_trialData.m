@@ -196,7 +196,7 @@ if nargin >= 1 && rebuildDataFile
 else
    
    % Load data from file
-   dat = load(fullfile(getLCP_collectedDataDir, 'trialData'));
+   dat = load('trialData');
    trialData = dat.trialData;
    siteSpecs = dat.siteSpecs;
 end

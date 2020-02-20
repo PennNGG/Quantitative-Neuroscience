@@ -1,0 +1,1 @@
+function [b] = isvector(x)% isvector(x) returns 1 if x is a vector.  The routine returns 1 if x is a% is a high dimensional array, like a 1 by 1 by 1 by 5.% 5/29/98 mns wrote itb = sum(size(x)>1) == 1;
