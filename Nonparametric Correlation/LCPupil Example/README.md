@@ -7,13 +7,12 @@ The data should already be in the LCPupil Example folder, but it is also stored 
    	d. The NeuroCore Box folder should have been shared with you during the course. Please let us know if you cannot find it.
 	e.  Note the directory where it is on your computer if Box is mounted to your computer. Or save the file to your computer (ideally to the LCPupil Example folder if Box is not mounted)
    
-2. Add  LCPupil Example folder to Matlab Path
+2. Add LCPupil Example folder (and subfolders) to Matlab Path
 	a. In Matlab (as of version 2019a), go to the HOME tab
 	b. Find button "Set Path" and click on it
-	c. Click on "Add Folder" Button
+	c. Click on "Add with Subfolders" Button
 	c. Add the LCPupil Example folder
-	d. Add the folder that contains the data from step 1 (if it is not saved in the LCPupil Example folder)
-	e. Optional: Updated dependency functions are from https://github.com/TheGoldLab/Lab_Matlab_Utilities if you need them. However, they should already be in the LCPupil Example folder 
+	d. This should include the subfolders with dependency functions ("matlab_functions" -- the orginals are from https://github.com/TheGoldLab/Lab_Matlab_Utilities)
 
 3. Optional: If the data from step 1 is not in the LCPupil Example folder, update the function getLCP_trialData to point to where you put the data.
 	a. Change line 199 
