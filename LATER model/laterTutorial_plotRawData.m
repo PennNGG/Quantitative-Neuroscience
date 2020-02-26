@@ -50,7 +50,7 @@
 SUBJECT_TAG = 'JT';
 
 % Load the data from that subject, given the base directory
-load(fullfile(getLATER_baseDirectory, 'data', 'data_mgl', 'F', ...
+load(fullfile(laterTutorial_getBaseDirectory, 'data', 'data_mgl', 'F', ...
    [SUBJECT_TAG '_RT.mat']));
 
 %% Plot RT distribution
@@ -79,7 +79,7 @@ rrtBins = 0:0.2:10.0; % cutting off long tail of express saccades
 %     left of the mode; and then overall a long tail to the right,
 %     indicating quite a few longer RT trials
 subplot(5,2,1); cla reset; hold on;
-plotLATER_histogram(tRxnSum(Ltrials), rtBins, 'RT (sec)')
+laterTutorial_plotHistogram(tRxnSum(Ltrials), rtBins, 'RT (sec)')
 
 %  RIGHT: Inverse RT distribution
 %  To see that the long tail on the right is roughly equivalent to an
@@ -87,7 +87,7 @@ plotLATER_histogram(tRxnSum(Ltrials), rtBins, 'RT (sec)')
 %     saccades are a long tail to the right, and otherwise the distribution
 %     looks pretty close to Gaussian
 subplot(5,2,2); cla reset; hold on;
-plotLATER_histogram(1./tRxnSum(Ltrials), rrtBins, '1/RT (sec)')
+laterTutorial_plotHistogram(1./tRxnSum(Ltrials), rrtBins, '1/RT (sec)')
 
 % Now loop through and plot for subjets of trials corresponding to (see Fig. 2
 %  in Kim et al):
@@ -107,11 +107,11 @@ for ii = 1:length(labels)
    
    % Plot RT distribution on the left
    subplot(5,2,3+(ii-1)*2); cla reset; hold on;
-   plotLATER_histogram(tRxnSum(LtrialSubsets(ii,:)), rtBins, labels{ii});
+   laterTutorial_plotHistogram(tRxnSum(LtrialSubsets(ii,:)), rtBins, labels{ii});
    
    % Plot 1/RT distribution on the right
    subplot(5,2,4+(ii-1)*2); cla reset; hold on;
-   plotLATER_histogram(1./tRxnSum(LtrialSubsets(ii,:)), rrtBins, labels{ii});   
+   laterTutorial_plotHistogram(1./tRxnSum(LtrialSubsets(ii,:)), rrtBins, labels{ii});   
 end
 
 % Add labels at bottom

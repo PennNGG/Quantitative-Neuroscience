@@ -43,7 +43,7 @@ Xline=[3 17];
 Ypred=b*Xline+a;
 plot(Xline,Ypred,'-','color',[0 0 0 ],'linewidth',4)
 
-suptitle(['Volume_p_r_e_d = ' num2str(a) '+' num2str(b) 'YearsExperience'])
+title(['Volume_p_r_e_d = ' num2str(a) '+' num2str(b) 'YearsExperience'])
 
 %let's test the null hypothesis that b (slope)=0;
 df=n-2; %degrees of freedom
@@ -168,7 +168,7 @@ for i =1:4
     text(4,max(maxY)+0.5-1,['r^2= ' num2str(r2(i))],'fontname','Georgia','fontsize',12)
 end
 
-figure(2);suptitle('Regression effects with increasing noise')
+figure(2);title('Regression effects with increasing noise')
 
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
