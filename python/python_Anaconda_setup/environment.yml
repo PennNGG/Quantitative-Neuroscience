@@ -1,0 +1,22 @@
+name: ngg_stats
+channels:
+ - defaults
+dependencies:
+ - python=3.8
+ - numpy=1.19.* #numbers
+ - pandas=1.0.* #data frame 
+ - scipy=1.5.* #scientific python package
+ - pip
+ - pip:
+   - fury==0.6.* #plotting interactive graphs
+   - scikit-image==0.17.* #machine learning on images
+   - nibabel==3.2.* #general MRI python package
+   - dipy==1.2.* #diffusion imaging (MRI)
+   - bctpy==0.5.2 #network analysis
+   - NetworkX==2.5.* #network analysis
+   - matplotlib==3.3.* #plotting
+   - seaborn==0.11.* #plotting
+   - scikit-learn==0.23.* #machine learning
+   - pingouin==0.3.* #a stats package
+   - xlrd==1.2.* #read excell xlsx files
+   - openpyxl==3.0.5 #write excell xlsx files
