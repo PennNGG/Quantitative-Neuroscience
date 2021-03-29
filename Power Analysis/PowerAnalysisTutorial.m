@@ -65,17 +65,25 @@ N = 10000;
 % value is greater than or equal to the previous effect size:
 outcomes = normrnd(mu1, sem, N, 1);
 LpositiveOutcomes = outcomes >= effectSize;
-disp(sprintf('%d positive outcomes out of %d experiments (%.2f pct)', ...
-   sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100))
+fprintf('%d positive outcomes out of %d experiments (%.2f pct)\n', ...
+   sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100)
 
 % We can plot these results as a normalized histogram
 subplot(4,1,2); cla reset; hold on;
-NnoEffect = hist(outcomes(~LpositiveOutcomes), xax);
-Neffect   = hist(outcomes(LpositiveOutcomes), xax);
-h1=bar(xax, NnoEffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+edges = xax(1)-binsz/2:binsz:xax(end)+binsz/2;
+Nall      = histcounts(outcomes, edges);
+NnoEffect = histcounts(outcomes(~LpositiveOutcomes), edges);
+Neffect   = histcounts(outcomes(LpositiveOutcomes), edges);
+normalizer = trapz(xax, histcounts(outcomes, edges));
+
+% h11=bar(xax, NnoEffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+h1=bar(xax, NnoEffect./normalizer);
 set(h1, 'EdgeColor', [0.9 0.9 0.9])
-h2=bar(xax, Neffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+
+% h2=bar(xax, Neffect./(sum(NnoEffect)+sum(Neffect))./binsz);
+h2=bar(xax, Neffect./normalizer);
 set(h2, 'EdgeColor', [0.1 0.1 0.1])
+
 plot(mu0.*[1 1], [0 0.45], 'k-');
 plot(mu1.*[1 1], [0 0.45], 'k-');
 plot(xax, normpdf(xax, mu0, sem), 'b-');
@@ -104,7 +112,8 @@ ylabel('probability');
 newEffectSize = sampsizepwr('z', [0 1], [], 0.8, 1);
 
 % This effect size is again the z-score, given the existing mean difference
-%  and the new sem -- so we can use it to compute the new sem:
+%  and the new sem -- so we can use it to compute the new sem (remember 
+%  that the z-score is the difference in means divided by the common sem):
 newSEM = (mu1-mu0)./newEffectSize;
 
 % To show that this is the case, let's try a bunch of sems and find the
@@ -141,8 +150,8 @@ ylabel('probability false negative');
 % Now do the simulated experiments as above, but with the new distributions
 outcomes = normrnd(mu1, newSEM, N, 1);
 LpositiveOutcomes = outcomes >=  norminv(0.975, mu0, newSEM);
-disp(sprintf('New sem=%.2f: %d positive outcomes out of %d experiments (%.2f pct)', ...
-   newSEM, sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100))
+fprintf('New sem=%.2f: %d positive outcomes out of %d experiments (%.2f pct)\n', ...
+   newSEM, sum(LpositiveOutcomes), N, sum(LpositiveOutcomes)/N*100)
 
 % Show it as normalized histograms
 subplot(4,1,4); cla reset; hold on;

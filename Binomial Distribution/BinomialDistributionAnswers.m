@@ -43,10 +43,11 @@ totalLogProb = log(prob1) + log(prob2) % Assume independence and compute sum
 ps = (0:0.01:1.0)';           % Array of possible release probabilities -- compute
                               % at a resolution of 0.01
 nps = length(ps);             % Get length of array of values of p
+
 probs = binopdf( ....         % Get value of the binomial distribution for each
    repmat([k1 k2], nps, 1), ...  % combination of k, n, p. The output is a matrix
-   repmat([n1 n2], nps, 1), ...  % with two rows: 1) n1, k1  2) n2, k2
-   repmat(ps, 1, 2));            % columns are different values of p
+   repmat([n1 n2], nps, 1), ...  % with two columns: 1) n1, k1  2) n2, k2
+   repmat(ps, 1, 2));            % rows are different values of p
 
 % The likelihood function is the product of likelihoods (assuming
 % independence)

@@ -88,7 +88,7 @@ set(gca, ...
 xlabel('RT (sec)');
 ylabel('Cum prob');
 
-% Now instead of a simulation, use the analytic soluation. Remember that:
+% Now instead of a simulation, use the analytic solution. Remember that:
 %  1. The x-axis of the reciprobit plot is labeled as RT, so the numbers
 %     are sensible, but what is really plotted is -1/RT
 %  2. The y-axis is labeled as probability but really is z-score (note the

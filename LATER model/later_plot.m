@@ -32,7 +32,7 @@ if nargin < 5 || isempty(color)
 end
 
 % get transformed data
-[xs,ys] = reciprobit_xys(rts);
+[xs,ys] = later_xys(rts);
 
 % plot raw data, make axes real purdy
 plot(-xs, ys, '.', 'Color', color);

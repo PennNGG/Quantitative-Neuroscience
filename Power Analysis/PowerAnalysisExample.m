@@ -1,25 +1,27 @@
 % Example power analysis for LC-pupil correlations (Joshi et al 2016)
 
-Ntr  = 200;
-Nexp = 1000;
-spikeRates = poissrnd(2, Ntr, Nexp);
-pupils = normrnd(0, 1, Ntr, Nexp);
+% Create a null distribution of "no relationship between LC spike rate and
+% pupil size" by simulateing a bunch of "experiments" with no effect. Here
+% we are assuming that LC spike counts are poisson distributed with a rate
+% of 1 Hz, and pupil has already been z-scored (so the mean is zero and the
+% std is one)
+trialsPerExeriment  = 200;
+numExperiments = 1000;
+spikeRates = poissrnd(1, trialsPerExeriment, numExperiments);
+pupils = normrnd(0, 1, trialsPerExeriment, numExperiments);
 
-corrs = nans(Nexp, 1);
-for ii = 1:Nexp
+corrs = nans(numExperiments, 1);
+for ii = 1:numExperiments
    corrs(ii) = corr(spikeRates(:,ii), pupils(:,ii), 'type', 'Spearman');
 end
 
-hist(corrs, 50);
+histogram(corrs, 50);
 xlabel('Correlation coefficients');
 ylabel('Count');
 disp([mean(corrs) std(corrs)])
 
-% We can use a power analysis to find the new sem. The key point is that a
-%  power analysis describes a relationship between the effect size and the
-%  power -- so we can define a particular power to compute the effect size.
-%  In this case, this is equivalent to doing a z test with one sample and a
-%  power of 80%:
+% We can perform a power analysis to find the n needed for different 
+%  effect sizes at a given power (here 80%)::
 
 % Argument 1: test type
 test_type = 't2';
@@ -28,8 +30,9 @@ test_type = 't2';
 P0 = [0 std(corrs)];
 
 % Argument 3: effect size
-% Compute n at 80% power for different effect sizes
-effect_sizes = (0.01:0.01:1)';
+% Compute n at 80% power for different effect sizes (effect sizes are mean
+% correlation coefficient for a positive effect)
+effect_sizes = (0.01:0.01:0.2)';
 num_effect_sizes = length(effect_sizes);
 
 % Argument 4: power
@@ -41,6 +44,6 @@ for ii = 1:num_effect_sizes
    ns(ii) = sampsizepwr(test_type, P0, effect_sizes(ii), power);
 end
 
-plot(effect_sizes, ns, 'ko-')
+plot(effect_sizes, ns, 'bo-')
 xlabel('Effect sizes')
 ylabel('n for 80% power')

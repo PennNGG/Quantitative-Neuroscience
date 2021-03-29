@@ -32,8 +32,8 @@ rYX         = SCOVXY/(sqrt(SSEY)*sqrt(SSEX));
 rBuiltIn = corrcoef(WingLength, TailLength);
 
 % Show that they are all the same
-disp(sprintf('rXY=%.4f (computed), %.4f (built-in)', rXY, rBuiltIn(1,2)))
-disp(sprintf('rYX=%.4f (computed), %.4f (built-in)', rYX, rBuiltIn(2,1)))
+fprintf('rXY=%.4f (computed), %.4f (built-in)\n', rXY, rBuiltIn(1,2))
+fprintf('rYX=%.4f (computed), %.4f (built-in)\n', rYX, rBuiltIn(2,1))
 
 %% 3. Compute standard error/confidence intervals
 %
@@ -57,7 +57,7 @@ z_95CIs = z+[1 -1].*norminv(0.025).*z_std;
 CI95 = (exp(2.*z_95CIs)-1)./(exp(2.*z_95CIs)+1);
 
 % Show it
-disp(sprintf('sem=%.4f, 95 pct CI = [%.4f %.4f]', standard_error_r, CI95(1), CI95(2)))
+fprintf('r=%.2f, sem=%.2f, 95 pct CI = [%.4f %.4f]\n', rXY, standard_error_r, CI95(1), CI95(2))
 
 %% 4. Compute p-value for H0:r=0
 % Two-tailed test
@@ -81,7 +81,7 @@ tVal = rXY/standard_error_r;
 prob = 2*(1-tcdf(tVal,n-2));
 
 % Print it nicely
-disp(sprintf('p=%.4f for H0: r=0', prob))
+fprintf('p=%.4f for H0: r=0\n', prob)
 
 %% 5. Is this r value different than r=0.75 
 % Here we use a z-test on the z-transformed values, as described in the
@@ -96,7 +96,7 @@ lambda = (z-zYale)/z_std;
 
 % Get a p-value from a two-tailed test
 prob2 = 2*(1-normcdf(lambda));
-disp(sprintf('p=%.4f for H0: r=0.75', prob2))
+fprintf('p=%.4f for H0: r=0.75\n', prob2)
 
 %% 6. Estimate power: That is, p(reject H0|H1 is true)
 %
@@ -113,7 +113,7 @@ zCriterion = norminv(1-alpha/2);
 % criterion
 power = 1-normcdf(zCriterion-lambda)
 
-% Can calculate using sampsizepwr... note that we use n=1 because lambda is
+% Can also calculate using sampsizepwr... note that we use n=1 because lambda is
 % alerady in z units for the SEM
 power = sampsizepwr('z', [0 1], lambda, [], 1)
 

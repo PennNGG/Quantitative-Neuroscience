@@ -46,7 +46,7 @@ opts = optimoptions(@fmincon,    ... % "function minimization with constraints"
 SUBJECT_TAG = 'JT';
 
 % Load the data from that subject, given the base directory
-load(fullfile(getLATER_baseDirectory, 'data', 'data_mgl', 'F', ...
+load(fullfile(laterTutorial_getBaseDirectory, 'data', 'data_mgl', 'F', ...
    [SUBJECT_TAG '_RT.mat']));
 
 % Select the appropriate data (see scriptLATER_rawData for details)
@@ -127,7 +127,7 @@ for ii = 1:length(labels)
    [fits(ii,:), nllk] = run(gs,problem);
    
    % Plot using our utility function, which expects RT in msec
-   reciprobit_plot(RTs, fits(ii,:), gca, [], colors{ii})
+   later_plot(RTs, fits(ii,:), gca, [], colors{ii})
 end
 
 % Plot the fits
@@ -138,8 +138,13 @@ for xx = 1:2
 end
 subplot(2,2,3);
 axis([1 4 2 8]);
+xlabel('Condition')
+ylabel('mu-R');
+
 subplot(2,2,4);
 axis([1 4 0.5 2.5]);
+xlabel('Condition')
+ylabel('delta-S');
 
    
 

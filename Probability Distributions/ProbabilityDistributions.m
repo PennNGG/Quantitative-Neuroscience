@@ -17,6 +17,8 @@
 %     cumulative distribution functions (cdfs)
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
+% Tested with:
+%   MATLAB Version: 9.8.0.1323502 (R2020a)
 
 % open a figure that we will use to plot stuff
 figure
@@ -34,17 +36,19 @@ figure
 %  This is a DISCRETE distribution because by definition it only takes on
 %  specific, discrete values (in this case either 0 or 1)
 
-% We can use rand, which produces a random variable on the interval (0,1)
-%  -- which means that all values are greater than 0 and less than 1
+% We can use rand, which produces a random variable on the interval (0,1),
+%  which means that all values are greater than 0 and less than 1
 p = 0.7; % choose value for p
-outcome = rand() <= p; % create logical variable from single pick
+single_outcome_method_1 = rand() <= p; % create logical variable from single pick
+fprintf('outcome using rand = %.2f\n', single_outcome_method_1)
 
 % Or, equivalently, use binornd -- a random pick from a binomial
 %  distribution with n=1 (i.e., a Bernoulli distribution is a special
 %  case of a binomial distribution with n=1)
 p = 0.7; % choose value for p
 n = 1;   % special case of just one trial
-outcome = binornd(n,p);
+single_outcome_method_2 = binornd(n,p);
+fprintf('outcome using binornd = %.2f\n', single_outcome_method_2)
 
 % Check that we are generating the probability correctly by generating a
 % lot of trials and testing if the outcome is as expected.
@@ -55,8 +59,8 @@ for ii = 1:N % loop through the trials
 end
 
 % Print out the results
-disp(sprintf('%d zeros, %d ones, simulated p = %.2f, empirical p = %.2f', ...
-   sum(outcomes==0), sum(outcomes==1), p, sum(outcomes==1)/N))
+fprintf('%d zeros, %d ones, simulated p = %.2f, empirical p = %.2f\n', ...
+   sum(outcomes==0), sum(outcomes==1), p, sum(outcomes==1)/N)
 
 %% Binomial distribution
 %
@@ -65,7 +69,7 @@ disp(sprintf('%d zeros, %d ones, simulated p = %.2f, empirical p = %.2f', ...
 %  Mathworld: http://mathworld.wolfram.com/BinomialDistribution.html
 %
 % Distribution of the number of successful outcomes for a given number 
-%  of Bernoulli trials, defined by two parameters:
+%  of Bernoulli trials in a given experiment, defined by two parameters:
 %  p = probability of success on each trial (constant across trials)
 %  n = number of trials
 %
@@ -73,7 +77,7 @@ disp(sprintf('%d zeros, %d ones, simulated p = %.2f, empirical p = %.2f', ...
 %  takes on specific, discrete values (in this case non-negative integers 
 %  corresponding to the number of successes in n tries; thus, values 0:n).
 
-% Choose some values
+% Choose some values for the parameters n and p
 p = 0.7;
 n = 1000;
 
@@ -82,17 +86,17 @@ n = 1000;
 outcome = binornd(n,p);
 
 % Print out the results
-disp(sprintf('%d successes, simulated p = %.2f, empirical p = %.2f', ...
-   outcome, p, outcome/n))
+fprintf('%d successes out of %d trials, simulated p = %.2f, empirical p = %.2f\n', ...
+   n, outcome, p, outcome/n))
 
 % The full probability distribution describes the probabilty of obtaining
 %  each possible number of successes (k), given n and p. If we set n=10,
 %  the the possible values of k are 0, 1, ..., 10. Now we use binornd
 %  to simulate many different picks to get a full distribution
 p = 0.7;
-n = 10;       % number of "trials" 
-N = 1000;     % number of "simulations"
-outcomes = binornd(n,p,N,1);
+n = 10;       % number of "trials" per "experiment"
+NumExperiments = 1000;     % number of "experiments"
+outcomes = binornd(n,p,NumExperiments,1);
 
 % Make histogram of all possible outcomes. We want bins centered on whole
 % numbers so we offset the edges
@@ -228,14 +232,14 @@ legend('Simulated', 'Theoretical')
 % The Poisson process is defined by a rate, lambda, of events/sec
 lambda = 1;
 
-% will consider events generated in a given fixed interval, in seconds.
+% We will consider events generated in a given fixed interval, in seconds.
 deltaT = 10;
 
-% Axis for histogram of counts that we will compute/show
+% Define an axis for computing and plotting a histogram of counts
 xaxis = 0:20;
 
-% Number of samples per simulation
-N = 1000;
+% Number of simulations
+num_simulations= 1000;
 
 % Loop through different numbers of time bins used to divide up the given
 %  interval. Remember this is how we will show the transition from a 
@@ -255,8 +259,8 @@ for n = round(linspace(1,100,20))
    p = min(lambda * deltaT/n, 1);
    
    % Simulate outcomes as the number of events that occurred in the n bins
-   %  ("tries"), given p and done N times.
-   outcomes = binornd(n, p, N, 1);
+   %  ("tries"), given p and done num_simulations times.
+   outcomes = binornd(n, p, num_simulations, 1);
    
    % Make a histogram of the outcomes, using the array of counts ("xaxis")
    %  we defined above. Note that we shift xaxis and add another interval
@@ -282,11 +286,10 @@ for n = round(linspace(1,100,20))
    plot(xaxis, poissY, 'bo-', 'LineWidth', 2, 'MarkerSize', 10);
 
    % Labels, etc
-   title(sprintf('n=%d', n))
    axis([xaxis(1) xaxis(end) 0 max(poissY)+0.1])
-   title(sprintf('p=%.1f, number bins = %d, number simulations=%d', ...
-      p, n, N))
-   xlabel(sprintf('Number of successes', n));
+   title(sprintf('p=%.1f, number bins=%d, number simulations=%d', ...
+      p, n, num_simulations))
+   xlabel('Number of successes');
    ylabel('Probability');
    legend('Simulated', 'Theoretical binomial', 'Theoretical Poisson')
 
@@ -306,7 +309,7 @@ cla reset; hold on;
 axis([0 max(lambdas)+1 0 max(lambdas)+1]);
 
 % Show main diagonal
-plot([0 0 max(lambdas)+1], [0 0 max(lambdas)+1], 'k:');
+plot([0 max(lambdas)+1], [0 max(lambdas)+1], 'k:');
 
 % Show labels
 xlabel('Mean of counts');
@@ -337,20 +340,13 @@ lambda = 1;    % Rate (events per sec)
 nBinsPerSecond = 100;  % Number of bins in which to check for events
 totalBins = round(nBinsPerSecond*deltaT);
 
-% Now simulate a different way... make an array of n bins filled with zeros,
-% then loop through and in each bin check if the event happened or not
-outcomes = zeros(totalBins, 1);
-
-% Again convert lambda (overall rate) to probability/bin, using deltaT
-%     events/time divided by bins/time = events/bin
+% First convert lambda (overall rate) to probability/bin, using deltaT
+%     events/time divided by bins/time = events/bin, as before
 p = lambda * deltaT / totalBins;
 
-% Loop through the bins
-for ii = 1:totalBins
-   
-   % Did it happen?
-   outcomes(ii) = binornd(1,p);
-end
+% Now simulate checking one "outcome" per bin, using the given
+% probability/bin
+outcomes = binornd(1, p, totalBins, 1);
 
 % Check that the nubmer of events is what we expect
 disp([lambda*deltaT sum(outcomes==1)])
@@ -366,11 +362,11 @@ disp([lambda*deltaT sum(outcomes==1)])
 intervalsBetweenEvents = diff(find(outcomes));
 
 % Convert to seconds
-intervalsBetweenEvents = intervalsBetweenEvents ./ nBinsPerSecond;
+intervalsBetweenEventsSec = intervalsBetweenEvents ./ nBinsPerSecond;
 
-% Show the histogram -- it's an exponential
+% Show the histogram -- it's an exponential distribution!
 cla reset;
-histogram(intervalsBetweenEvents, 50); 
+histogram(intervalsBetweenEventsSec, 50); 
 title('Histogram of intervals between events in a Poisson process')
 xlabel('Interval duration (sec)');
 ylabel('Count')
@@ -391,14 +387,14 @@ cla reset; hold on;
 % Get the histogram
 [N,X] = hist(intervalsBetweenEvents, 50);
 
-% Here the interval (the x-axis that is binned in the histogram to visualize
-%  it, but the actual values can take on any continuous value because they
-%  represent the amount of time since the previous event) is a continuous
-%  variable, so to normalize the histogram to make a pdf we
-%  can't just sum the values -- we have to sum the values multiplied by the
-%  bin width (i.e., take the integral). We use matlab's "trapz" which
-%  treats each bin as a trapezoid (because the heights before and after can
-%  be slightly different) to compute the integral:
+% Here the interval is a continuous variable (note that the x-axis is 
+%   binned in the histogram to visualize it, but the actual values can 
+%   take on any continuous value because they represent the amount of 
+%   time since the previous event), so to normalize the histogram to make a pdf we
+%   can't just sum the values -- we have to sum the values multiplied by the
+%   bin width (i.e., take the integral). We use matlab's "trapz" which
+%   treats each bin as a trapezoid (because the heights before and after can
+%   be slightly different) to compute the integral:
 normalizedIntervals = N./trapz(X, N);
 bar(X,normalizedIntervals);
 
@@ -435,6 +431,7 @@ times = cumsum(intervals);
 % A bit of a cheat -- find the run with the shortest time, then use that as
 % the interval to test across runs
 minTime = min(times(end,:));
+fprintf('min_time = %.2f\n', minTime)
 
 % Count the times less than the min interval per run
 counts = sum(times<=minTime)';
@@ -442,8 +439,8 @@ counts = sum(times<=minTime)';
 % Check mean, var (for a simulated Posson process, the mean and var should
 % be pretty close to each other -- where "pretty close" is going to depend
 % on factors like N and M)
-disp(sprintf('lambda*deltaT = %.2f, mean = %.2f, var = %.2f', ...
-   lambda*minTime, mean(counts), var(counts)))
+fprintf('lambda*deltaT = %.2f, mean = %.2f, var = %.2f\n', ...
+   lambda*minTime, mean(counts), var(counts))
 
 % Now let's consider the "Randomness" of this process in more detail.
 % We say that it has a "flat hazard function": at any given point in time, 
@@ -467,10 +464,10 @@ for ii = 1:N
    % Get the histogram of intervals using bins defined by "xs"
    counts = hist(intervals(intervals(:,ii)<minTime, ii), xs);
    
-   % Convert into a pdf
+   % Convert into a pdf, using trapz because the intervals are continuous
    pdf = counts./trapz(xs, counts);
 
-   % Compute the cdf
+   % Compute the cdf -- again using trapz 
    cdf = cumtrapz(xs, pdf);
    
    % Save the hazard
@@ -526,7 +523,7 @@ xaxis = edges(1:end-1)+diff(edges);
 npdf = counts./trapz(xaxis, counts);
 bar(xaxis, npdf);
 
-% Use plot bounds
+% Show theoretical pdf in red
 plot(xaxis, normpdf(xaxis, mu, sigma), 'r-', 'LineWidth', 2);
 
 % labels, ets
@@ -623,19 +620,19 @@ sigma = 10;
 N = 10000;
 samples = normrnd(mu, sigma, N, 1);
 
-disp(sprintf('mean=%.2f, std=%.2f, var=%.2f', ...
-   mean(samples), std(samples), var(samples)))
+fprintf('mean=%.2f, std=%.2f, var=%.2f\n', ...
+   mean(samples), std(samples), var(samples))
 
 % 1. Add a constant changes the mean, not the std
 offset = 20;
-disp(sprintf('mean=%.2f, std=%.2f, var=%.2f', ...
-   mean(samples+offset), std(samples+offset), var(samples+offset)))
+fprintf('mean=%.2f, std=%.2f, var=%.2f\n', ...
+   mean(samples+offset), std(samples+offset), var(samples+offset))
 
 % 2. Multiply by a constant scales the mean by that amount, the variance by
 %     that amount squared
 scale = 7;
-disp(sprintf('mean=%.2f, std=%.2f, var=%.2f', ...
-   mean(samples*scale), std(samples*scale), var(samples*scale)))
+fprintf('mean=%.2f, std=%.2f, var=%.2f\n', ...
+   mean(samples*scale), std(samples*scale), var(samples*scale))
 
 % 3. Adding two Gaussian random variables gives you a gaussian random 
 %     variable with:
@@ -645,5 +642,5 @@ mu2 = 5;
 sigma2 = 10;
 
 samples2 = normrnd(mu2, sigma2, N, 1);
-disp(sprintf('mean2=%.2f, std2=%.2f, var2=%.2f', ...
+fprintf('mean2=%.2f, std2=%.2f, var2=%.2f\n', ...
    mean(samples+samples2), std(samples+samples2), var(samples+samples2)))
