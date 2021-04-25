@@ -1,19 +1,20 @@
-function NonParametricTesting()
+% Non-parametric testing
+%
+% To use this tutorial, read the commands and execute the code line-by-line.
+%
+% Copyright 2019 by Yale E. Cohen, University of Pennsylvania
 
-disp(['MANN-WHITNEY'])
-%Let's imagine that we tested NGG students on an IQ test 
-% when they had "no sleep"
-NoSleep=[181 183 170 173 174 179 172 175 178 176 158 179 180 172 177]';
+% Let's set up a toy problem:
+%   
+NoSleep = [181 183 170 173 174 179 172 175 178 176 158 179 180 172 177]';
 
 %we need to create a vector of the same length with the values to be tested
 %by null hypothesis.
-M=ones(size(NoSleep,1),size(NoSleep,2))*180; %this is just to set up code for
-                                             % a one-sample test. If you
-                                             % were doing 2-sample test,
-                                             % then replace M with the data
-                                             % from your other population.
-                                             % For example, maybe the IQ
-                                             % values of NGG students when
+M=ones(size(NoSleep))*180; 
+
+% Note his is just to set up code for a one-sample test. If you were doing 
+%  a 2-sample test, then replace M with the data from your other population.
+%  For example, maybe the IQ values of NGG students when
                                              % they had lots of sleep. The
                                              % code would be exactly the
                                              % same except with the
@@ -36,7 +37,7 @@ nNoSleep= numel(NoSleep);
 nM = numel(M);
 ns = min(nNoSleep,nM);
 
-%sort and rankj values
+%sort and rank values
 [ranks, tieadj] = tiedrank([NoSleep; M]);
 srank = ranks(1:ns);
 w = sum(srank);
@@ -49,7 +50,6 @@ wc = w - wmean;
 z = (wc - 0.5 * sign(wc))/sqrt(wvar);
 p = 2*normcdf(-abs(z));
 disp(['Probability of rejecting null hypothesis that the median IQ value is not equal to 180  p =' num2str(p)]); 
-
 
 % a right-tail test
 z = (wc - 0.5)/sqrt(wvar);

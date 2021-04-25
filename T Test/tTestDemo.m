@@ -20,9 +20,7 @@ xax = -10:0.01:10;
 
 % for histograms
 data_bin_size = 0.1;
-data_bins = -10:data_bin_size:10;
-t_bin_size = 0.05;
-t_bins = -5:t_bin_size:5;
+data_bins = -xax(1):data_bin_size:xax(end);
 
 % for simulations 
 num_experiments = 100000;
@@ -40,7 +38,7 @@ for n = 2:max_n
    % Simulate multiple experiments
    samples = normrnd(test_mu, test_std, num_experiments, n);
    
-   % Compute the t-statistic from each experient
+   % Compute the t-statistic from each experiment
    tstats = mean(samples,2)./std(samples,[],2).*sqrt(n);
    
    % bottom plot is null, test distributions
@@ -72,8 +70,8 @@ for n = 2:max_n
 
    % next plot normal, t distributions of mean, and samples
    subplot(4,1,2); cla reset; hold on;
-   counts = hist(tstats, t_bins);
-   bar(t_bins, counts./trapz(t_bins, counts));
+   counts = hist(tstats, xax);
+   bar(xax, counts./trapz(xax, counts));
    plot(xax, tpdf(xax, n-1), 'r-', 'LineWidth', 2);
    plot(xax, tpdf(xax-test_mu/test_std*sqrt(n), n-1), 'r--', 'LineWidth', 2);
    plot(xax, normpdf(xax, 0, 1), 'g-', 'LineWidth', 2);

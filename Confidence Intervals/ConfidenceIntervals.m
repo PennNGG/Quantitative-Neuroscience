@@ -34,10 +34,10 @@ for n = [5 10 20 40 80 160 1000]
    data = normrnd(mu, sigma, n, 1);
    
    % Save the mean
-   meand = mean(data);
+   sample_mean = mean(data);
    
    % Show the mean, n
-   disp(sprintf('N = %d, MEAN = %.2f', n, meand))
+   fprintf('n = %d, MEAN = %.2f\n', n, sample_mean)
    
    % Method 1: analytic solution assuming Gaussian
    %
@@ -47,12 +47,12 @@ for n = [5 10 20 40 80 160 1000]
    
    % 1a. Use the given sigma
    sem = sigma/sqrt(n);
-   disp(sprintf('1a: CI=[%.2f %.2f]', meand-sem*z, meand+sem*z))
+   fprintf('1a: CI=[%.2f %.2f]\n', sample_mean-sem*z, sample_mean+sem*z)
       
    % 1b. Use the sample sigma
    % BEST IF n IS LARGE (>30)
    sem = std(data)./sqrt(n);   
-   disp(sprintf('1b: CI=[%.2f %.2f]', meand-sem*z, meand+sem*z))
+   fprintf('1b: CI=[%.2f %.2f]\n', sample_mean-sem*z, sample_mean+sem*z)
    
    % Method 2: analytic solution assuming t-distribution
    % BEST IF n IS SMALL (<30) ... note that as n increases, the t
@@ -62,8 +62,9 @@ for n = [5 10 20 40 80 160 1000]
    % Get the cutoff using the t distribution, which is said to have n-1
    %  degrees of freedom
    t = -tinv((1-alpha)/2, n-1);   
+   disp(t)
    sem = std(data)./sqrt(n);
-   disp(sprintf('2 : CI=[%.2f %.2f]', meand-sem*t, meand+sem*t))
+   fprintf('2 : CI=[%.2f %.2f]\n', sample_mean-sem*t, sample_mean+sem*t)
    
    % Method 3: bootstrap!
    %
@@ -76,8 +77,8 @@ for n = [5 10 20 40 80 160 1000]
    end
    
    % Now report the CI directly from the bootstrapped distribution
-   disp(sprintf('3 : CI=[%.2f %.2f]', ...
-      prctile(mu_star, 100*(1-alpha)/2), prctile(mu_star, 100*(alpha+(1-alpha)/2))))
+   fprintf('3 : CI=[%.2f %.2f]\n', ...
+      prctile(mu_star, 100*(1-alpha)/2), prctile(mu_star, 100*(alpha+(1-alpha)/2)))
    
    % Method 4: Credible interval
    % See the Canvas discussion -- under these assumptions (i.e., data

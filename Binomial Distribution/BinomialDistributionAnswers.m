@@ -53,7 +53,7 @@ probs = binopdf( ....         % Get value of the binomial distribution for each
 % independence)
 subplot(2,1,1); cla reset; hold on;
 ylabel('Likelihood');
-likelihoodFcn = prod(probs,2);   % Compute the product
+likelihoodFcn = prod(probs,2);   % Compute the product for each row 
 plot(ps, likelihoodFcn);         % Plot it
 maxLikelihood = max(likelihoodFcn); % Get the maximum likelihood
 plot(ps(likelihoodFcn==maxLikelihood), maxLikelihood, 'ko');
@@ -62,7 +62,7 @@ plot(ps(likelihoodFcn==maxLikelihood), maxLikelihood, 'ko');
 % independence)
 subplot(2,1,2); cla reset; hold on;
 ylabel('Log-likelihood');
-logLikelihoodFcn = sum(log(probs),2); % Compute the sum
+logLikelihoodFcn = sum(log(probs),2); % Compute the sum for each row
 plot(ps, logLikelihoodFcn);      % Plot it
 maxLogLikelihood = max(logLikelihoodFcn); % Get the maximum likelihood
 plot(ps(logLikelihoodFcn==maxLogLikelihood), maxLogLikelihood, 'ko');
@@ -121,46 +121,27 @@ for sampleSize = round(logspace(0,3,30))  % try different sample sizes
    % Plot theoretical pdf
    plot(ks, binopdf(ks, n, pRelease), 'ro-');
    
-   % compute (log) lik for each p
-   pdat(:,1) = 1; % initialize so we can keep track of product of likelihoods
-   pdat(:,2) = 0; % initialize so we can keep track of sum of log-likelihoods
-   
-   % Loop through each possible value of release probability
+   % Now compute the (log) likelihoods, which are just the probability of
+   % obtaining the (simulated) data (i.e., counts) under different
+   % "hypotheses" corresponding to the different release probabilities
+   % Therefore, we loop through each possible value of release probability
    for pp = 1:length(ps)
       
       % Compute the probabilities of obtaining the data, given the assumed
       % release probabilty
-      probs = binopdf(ks, n, ps(pp));
+      probs = binopdf(sCounts, n, ps(pp));
       
-      % Loop through each possible value of k we could have obtained in the
-      % simulated experiment
-      for cc = 1:length(ks)
-         
-         % Did we actually obtain that particular value of k?
-         if sCountHistogram(cc) > 0
-            
-            % Avoid really small numbers
-            if probs(cc) < TINY
-               lprob = log(TINY);
-               pprob = TINY;
-            else
-               lprob = log(probs(cc));
-               pprob = probs(cc);
-            end
-            
-            % Product of likelihoods
-            pdat(pp,1) = pdat(pp,1).*pprob.^sCountHistogram(cc);
-            
-            % Sum of log likelihoods
-            pdat(pp,2) = pdat(pp,2)+lprob.*sCountHistogram(cc);
-         end
-      end
+      % Avoid really small numbers
+      probs(probs<TINY) = TINY;
+      
+      % Save product of likelihoods and sum of log likelihoods
+      pdat(pp,:) = [prod(probs), sum(log(probs))];
    end
    
    % Use binofit to estimate p from the simulated data. This uses a trick
    % that assumes all of the measurements are independent and lumps them
    % together as if they were one big experiment.
-   [phat, pci] = binofit(sum(sCounts),sampleSize*14);
+   [phat, pci] = binofit(sum(sCounts),sampleSize*n);
    
    % Plot product of likelihoods
    %
@@ -243,15 +224,23 @@ pHat_fromLiklihood = ps(likelihoodFcn==max(likelihoodFcn))
 logLikelihoodFcn = sum(log(probs).*countsMatrix,2);
 pHat_fromLogLikelihood = ps(logLikelihoodFcn==max(logLikelihoodFcn))
 
-% use binofit
-pHat = binofit(sum(counts.*ks),sum(counts)*n)
+% Compare to empirical value
+pHat = sum(counts.*ks)/(sum(counts)*n)
 
 %% Exercise 5
 n = 14;                       % Number of available quanta
 k = 7;                        % Measured number of released quanta
 pHat = binofit(k,n)           % Compute maximum-likelihood value of p
 pNull = 0.3;                  % Null hypothesis p
-prob = binopdf(k,n,pNull)    % p>0.05, so cannot rule out that we would have gotten this measurement by chance under the null hypothesis
+
+% Get p-value for one-sided test that you would have gotten k or more 
+% successes in n trials for the given null hypothesis p
+% NOTE: use k-1 because the cdf gives the probability of getting up to and 
+%   including that number of successes; we want 1-cdf, which is the
+%   probability that we got that many or greater
+% The result is p>0.05, so cannot rule out that we would have gotten 
+%  this measurement by chance under the null hypothesis
+1 - binocdf(k-1, n, pNull) 
 
 %% Bonus exercise
 % The data table
@@ -296,15 +285,16 @@ for ii = 1:num_sessions
    % If you want to compute Chi-2 goodness-of-fit,  k-1 degrees of freedom
    % A little bit of a cheat -- assume all bins contribute even when
    % binomialCounts=0 (because nx is always zero then, too)
-   % pb = 1-chi2cdf(nansum((nx-binomialCounts).^2./binomialCounts), length(binomialCounts)-1);   
+   pb = 1-chi2cdf(nansum((nx-binomialCounts).^2./binomialCounts), length(binomialCounts)-1);   
 
    % Get Possion pdf
    pps = poisspdf(xs, m);
    plot(xs+0.5, pps, 'bo-', 'MarkerFaceColor', 'b', 'LineWidth', 2);
 
    % If you want to compute Chi-2 goodness-of-fit, k-1 degrees of freedom
-   % poissonCounts = round(pps.*N);
-   % pp = 1-chi2cdf(nansum((nx-poissonCounts).^2./poissonCounts), length(poissonCounts)-1);
+   poissonCounts = round(pps.*N);
+   pp = 1-chi2cdf(nansum((nx-poissonCounts).^2./poissonCounts), length(poissonCounts)-1);
+   fprintf('row=%d, goodness-of-fits, binomial p=%.3f, Poisson p=%.3f\n', ii, pb, pp)
 
    % Show titles,labels, legend
    axis([0 5 0 1]);
