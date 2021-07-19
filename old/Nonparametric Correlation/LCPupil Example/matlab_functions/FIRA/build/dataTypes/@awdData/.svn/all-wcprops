@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData
+END
+addTrial.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/addTrial.m
+END
+awdData.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/awdData.m
+END
+cleanup.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/cleanup.m
+END
+parse.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/parse.m
+END
+alloc.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/alloc.m
+END
+get.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/get.m
+END
+purge.m
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/1/trunk/FIRA/build/dataTypes/@awdData/purge.m
+END

@@ -1,0 +1,1 @@
+function SEP = getSEP% getSEP - returns the directory separator character for the current% system. % RCS info: $Id$%com = computer;if strcmp(com,'MAC2')  SEP = ':';elseif strcmp(com,'PCWIN')  SEP = '\';elseif (isunix)  SEP = '/';else  error('Get a better machine, you doofus.');end

@@ -1,0 +1,73 @@
+10
+
+dir
+135
+https://dotsx.googlecode.com/svn/trunk/FIRA/build/dataTypes
+https://dotsx.googlecode.com/svn
+
+
+
+2013-07-17T15:34:58.842468Z
+128
+joshiangold
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f5e38a76-22d2-11de-96a1-5542d1fc8aa6
+
+@distrData
+dir
+
+@gameHIDData
+dir
+
+@matCmds
+dir
+
+@kbdData
+dir
+
+@lpHIDData
+dir
+
+@QUESTData
+dir
+
+@spikes
+dir
+
+@PMDHIDData
+dir
+
+@analog
+dir
+
+@ecodes
+dir
+
+@awdData
+dir
+
+@aslData
+dir
+
+@dio
+dir
+
+@trial
+dir
+
+@errors
+dir
+

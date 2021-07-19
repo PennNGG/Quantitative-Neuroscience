@@ -1,0 +1,1 @@
+function outstr = num2plus(number)% outstring = num2plus(number)%%   An extension of num2str which returns a '+' in front of positive numbers% RCS info: $Id$%if number >= 0,   outstr = ['+' num2str(number)];else  outstr = num2str(number);end
