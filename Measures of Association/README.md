@@ -1,6 +1,0 @@
-## Overview
-Correlation and regression both measure linear relationships between variables, but they are different: in correlation, you sample both measurement variables randomly from a population (e.g., weight and height), whereas in regression, you choose or fix the values of the independent variable(s) (e.g., amount of ice cream eaten). These are subtle but important distinctions. And, of course, just because things are correlated, doesn't mean they are causally related. Indeed, there may be another (unknown) variable that is actually the causal mechanism that affects the two values that you are measuring. One always need to be careful not to attribute causality to an association or correlation: remember the [frog story](http://www.terrificscience.org/lessonpdfs/Frog_Experiment.pdf)!
-
-There are also other analyses that don't look at linear relationships but can ask simply for monotonic relationships between two variables or can assume that the data are not normally distributed (e.g., a Spearman correlation) .
-
-Finally, one can also test for non-linear relationships, in which maybe you hypothesize that predictors $X$ and measurements $Y_{pred}$ have a squared relationship: $Y_{pred}=a+bX^2$
