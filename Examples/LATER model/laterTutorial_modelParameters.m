@@ -1,4 +1,4 @@
-% laterTutorial_modelParameters
+ % laterTutorial_modelParameters
 %
 % Script for examining LATER model parameters
 %

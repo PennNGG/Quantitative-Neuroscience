@@ -1,1 +1,0 @@
-function ang_ = ang(vect)% function ang_ = ang(vect)%% 5/24/99 jig createdif vect(:,1)==0 && vect(:,2)==0   ang_ = nan;   else   ang_ = 180/pi*atan2(vect(:,2),vect(:,1));      Ls = ang_ < 0;   ang_(Ls) = 360 + ang_(Ls);end

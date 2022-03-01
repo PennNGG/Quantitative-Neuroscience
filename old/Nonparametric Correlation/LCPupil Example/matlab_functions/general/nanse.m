@@ -1,1 +1,0 @@
-function se = nanse(x,dim)% nanse(x,dim) returns the std error of the matix x %   along the dimension dim% 1/15/97 mns wrote itif ~isempty(x)    if nargin < 2        dim = [];    end    se = nanstd(x,[],dim) ./ sqrt(sum(~isnan(x),dim));else  se = nan;end

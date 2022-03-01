@@ -1,7 +1,6 @@
 % Parametric Correlations
-%
 % Answers to exercises found here: 
-%  https://colab.research.google.com/drive/11kgk7FpLgbSlA4pjS4cCH1B5mYDUgj5b?usp=sharing
+%  https://canvas.upenn.edu/courses/1358934/discussion_topics/5600885
 %
 % Copyright 2019 by Yale E. Cohen, University of Pennsylvania
 %  Updated 01/01/20 by jig

@@ -51,7 +51,7 @@ totalSS=SumY2-SumY^2/n;    %totalSS is essentially the sum of the square of the 
 regressionSS=Sumxy^2/Sumx2;
 residualSS=totalSS-regressionSS;
 Fstat=regressionSS/(residualSS/df);
-prob=fpval(Fstat,1,n-2); % significance probability for regression
+prob=1-fcdf(Fstat,1,n-2); % significance probability for regression
 text(4,5,['(Fstat based) p of H0:b=0 is ' num2str(prob)],'fontname','Georgia','fontsize',12)
 
 %let's use a t-test to test the null hypothesis that b=0
