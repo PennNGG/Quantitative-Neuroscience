@@ -18,4 +18,6 @@ See each subdirectory for folders containing code in Python (mostly complete; ea
 
 ### Credits
 
-Copyright 2022 by Joshua I. Gold, University of Pennsylvania
+Copyright 2022 by Joshua I. Gold
+Neuroscience Graduate Group (https://www.med.upenn.edu/ngg/)
+University of Pennsylvania
