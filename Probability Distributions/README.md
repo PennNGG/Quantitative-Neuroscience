@@ -14,7 +14,10 @@ Those lessons include:
 
 ### Directory Structure
 
-See each subdirectory for folders containing code in Python (mostly complete; each file includes a button at the top to immediately "Open in Colab" where you can run the code), Matlab (partially complete), and R (very incomplete).
+See each subdirectory for folders containing code in Python (mostly complete), Matlab (partially complete), and R (very incomplete).
+
+All files can be downloaded to run on your local machine.
+Python files all incude a button at the top to "Open in Colab" where the code can be run virtually
 
 ### Credits
 
