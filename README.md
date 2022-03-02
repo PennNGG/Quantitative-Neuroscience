@@ -2,7 +2,8 @@
 
 Lessons and code for using quantitative approaches to analyze and interpret neuroscience data.
 
-### Contents:
+### Contents
+Each folder (listed below) contains lessons that are a combination of no code (typically .ipynb or .md files in the top-level folder) plus python, matlab, and (sometimes) R code in subfolders.
 
 #### Concepts  
 Confidence Intervals and Bootstrapping  
