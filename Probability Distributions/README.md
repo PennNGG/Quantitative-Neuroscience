@@ -21,7 +21,6 @@ Python files all incude a button at the top to "Open in Colab" where the code ca
 
 ### Credits
 
-Copyright 2022 by Joshua I. Gold
-Neuroscience Graduate Group (https://www.med.upenn.edu/ngg/)
-
+Copyright 2022 by Joshua I. Gold. 
+Neuroscience Graduate Group (https://www.med.upenn.edu/ngg/). 
 University of Pennsylvania
