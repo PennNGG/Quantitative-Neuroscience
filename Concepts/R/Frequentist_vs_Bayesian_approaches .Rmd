@@ -1,0 +1,148 @@
+---
+title: "Frequentist Versus Bayesian Approaches"
+output: html_notebook
+---
+
+Definitions:
+
+Debates between frequentists and Bayesians have carried on for years, touching on issues that are in some cases very practical and other cases much more philosophical. The goal here is not to dive deeply into all of those debates but rather to introduce you to the basic issues, because they are at the heart of what we can and cannot do with statistics.
+
+More specifically, the two camps differ fundamentally on how to interpret randomness, which profoundly affects the kinds of inferences that can be drawn on the basis of noisy data:
+
+A frequentist thinks of probability only in terms of the frequency of many repeated events that include some element of randomness. To a frequentist, assigning a probability to a singular event that can either happen or not happen, particularly one that is not directly or yet measured, is nonsensical ("There is no place in our system for speculations concerning the probability that the sun will rise tomorrow" -- William Feller). As a consequence of these ideas, a frequentist operates on the conditional distribution of the data, assuming that a hypothesis is true. That is, one makes a series of repeated measurements (the data) under fixed conditions, obtaining what is essentially a histogram. Inferences about the nature of the process that generated the data then allow only for this definition of randomness or uncertainty: the obtained variability in the data. Questions of the form "What is the probability that process x generated my data?" are undefined in this framework, because a probability cannot be assigned to an unknown and unseeable process (or "hypothesis"), only to repeated measures. Instead, the best you can do is simply assume that a particular process was the one that generated your data, and then ask "What is the probability that I would have obtained my data, assuming that x was the true process?" This question is the basis for null hypotheses (typically defined in terms of the parameters of the probability distribution that you would expect the data to be drawn from under a particular set of assumptions) and p-values: computing the likelihood p(data | null hypothesis).
+
+Benefits of this approach are that frequentist-based statistics are typically relatively easy to compute, they require few assumptions, and they tend to promote good experimental design (because you need to very carefully control the conditions under which the data are collected).
+
+Drawbacks include the fact that definitions of probability in this framework are often highly counter-intuitive to how most of us think, resulting in results that can be very difficult to interpret. A good example is the concept of a "confidence interval" in frequentist statistics, which is described nicely here.
+
+A Bayesian thinks of probability as the degree of belief in a proposition (or hypothesis). In this framework, data represent evidence that can support or oppose such a belief, which is represented as a probability distribution. Thus, unlike from the frequentist perspective, from the Bayesian perspective it is perfectly natural to describe the belief (or probability) that particular values of particular parameters of a particular probability distribution (together encompassing a "hypothesis" about the data) are true.
+
+These ideas are derived directly from the definition of joint probability (see Independence and Lack Thereof for a related discussion):
+
+𝑃(𝐴∩𝐵)=𝑝(𝐴|𝐵)×𝑝(𝐵)=𝑝(𝐵|𝐴)×𝑝(𝐴) 
+
+where  𝑃(𝐴∩𝐵)  is read as "the probability that A and B are true" and P(A | B) is read as "the probability that A is true, given that B is true" or just "the probability of A given B."
+
+If we call A the Hypothesis and B the Data, and rearrange, we get Bayes' Rule:
+
+𝑃(𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠|𝐷𝑎𝑡𝑎)=𝑃(𝐷𝑎𝑡𝑎|ℎ𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠)×𝑃(𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠)𝑃(𝐷𝑎𝑡𝑎) 
+
+Where P(Hypothesis | Data) is called the posterior probability (or just posterior), P(Data | Hypothesis) is the likelihood, P(Hypothesis) is the prior, and P(Data) is the marginal probability of the data.
+
+Benefits of the Bayesian approach are that it tends to get at the intuitive concepts that one is addressing (e.g., the probability that a hypothesis is true, given the data), and it does so in a rigorous manner.
+
+Drawbacks include questions about how to identify an appropriate prior.
+
+
+Getting Started with code:
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+
+Tutorial and Exercises 
+
+To use this tutorial, read the commands and execute the code cell-by-cell.
+
+The learning objective is to gain insights into thinking about inference from a "Frequentist" versus a "Bayesian" perspective. In brief, because a Frequentist does not consider the probability of an event or state of the world or hypothesis, only their frequency of occurrance, it is not possible to ask questions of the form "what is the probabilty that hypothesis x is true?" Instead, one can only consider questions of the form, "what is the probabilty that I would have obtained my data, given that hypothesis x is true?" In contrast, Bayesians consider the probabilities of such things (often called the strength of belief), but doing so can require making assumptions that can be difficult to prove.
+
+Let's start with a simple example, taken from:
+
+https://en.wikipedia.org/wiki/Base_rate_fallacy#Example_1:_HIV
+
+"Imagine running an HIV test on" A SAMPLE "of 1000 persons ..."
+
+"The test has a false positive rate of 5% (0.05)..." i.e., the probability that someone who takes the test gets a POSITIVE result despite the fact that the person does NOT have HIV
+
+"...and no false negative rate." i.e., The probability that someone who takes the test gets a NEGATIVE result despite the fact that the person DOES have HIV
+
+
+
+uestion #1: If someone gets a positive test, is it "statistically significant"?
+Answer: Statistical significance from the Frequentist perspective is typically measured by comparing p to a threshold value; e.g., p<0.05. In this case, "p" is shorthand for "the probabilty of obtaining the data under the Null Hypothesis", so we are checking for:
+𝑝(𝑑𝑎𝑡𝑎|𝑁𝑢𝑙𝑙𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠)<0.05 
+Here we take the Null Hypothesis as "not infected", and the data are just the single positive test. Therefore, the relvant p-value is simply the false-positive rate: p=0.05, which is typically considered "not significant." However, you can also see that it is not particularly informative.
+
+```{r}
+N <- 10000 # size of the SAMPLE 
+false_positive_rate <- 0.05
+false_negative_rate <- 0
+
+cat( "The probability of obtaining the data under the Null Hypothesis =", false_positive_rate)
+```
+
+Question #2: What is the probability that if someone gets a positive test, that person is infected?
+Answer: Here we are asking for a different probability:
+𝑝(𝑖𝑛𝑓𝑒𝑐𝑡𝑒𝑑|𝑝𝑜𝑠𝑖𝑡𝑖𝑣𝑒𝑡𝑒𝑠𝑡)=𝑝(ℎ𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠|𝑑𝑎𝑡𝑎)
+which is the "posterior probability" of the hypothesis, given the data.
+
+Let's work our way backwards to figure out what information we need to solve this problem. We can compute the probability that someone with a positive test is infected from a particular population as:
+𝑝𝑟𝑜𝑏𝑎𝑏𝑖𝑙𝑖𝑡𝑦𝑖𝑛𝑓𝑒𝑐𝑡𝑒𝑑𝑔𝑖𝑣𝑒𝑛𝑝𝑜𝑠𝑖𝑡𝑖𝑣𝑒𝑡𝑒𝑠𝑡=𝑡𝑜𝑡𝑎𝑙(𝑖𝑛𝑓𝑒𝑐𝑡𝑒𝑑𝑎𝑛𝑑𝑝𝑜𝑠𝑡𝑖𝑣𝑒)𝑡𝑜𝑡𝑎𝑙(𝑝𝑜𝑠𝑖𝑡𝑖𝑣𝑒)
+
+It should be obvious that to compute this quantity, we need to know the number of people in the population who are actually infected, in addition to knowing the number of people who had a positive test.
+
+
+```{r}
+# So let's start by definining how many in the population are actually infected. We'll start by assuming that that *real* rate of infection is 0.5 (i.e., half the POPULATION is infected), and then do a quick simulation to find out how many in our SAMPLE of N people are infected. We can do this simulation by by getting N picks from a binomial distribution, where each pick determines "isInfected" for a single person according to the assumed rate of infection:
+is_infected <- rbinom(1, N, 0.5)
+
+# Now we need to count the number of people who got a positive test in this 
+# example. There is no false negative rate, which implies that everyone who 
+# is infected got a positive test. 
+# But there is a non-zero false-positive rate, which implies that some of the 
+# people who are **not** infected will also have a positive test. We can use 
+# binornd again to generate random picks from a binomial distribtuion according 
+# to the false-positive rate:
+is_positive <- is_infected + rbinom(1, (N - is_infected), false_positive_rate)
+
+# Now we can compute the probability that someone with a positive test is infected:
+p_is_infected_given_is_positive <- ((is_positive - (is_positive - is_infected)) / is_positive)
+
+cat("Probaility infected given a positive test is", p_is_infected_given_is_positive)
+```
+Let's do the same thing, but this time we will try different values for the proportion of the population that is actually infected. What you should notice is that the PROPORTION INFECTED GIVEN A POSITIVE TEST depends (a lot!) on the OVERALL RATE OF INFECTION. Put another way, to determine the probabilty of a hypothesis, given your data (e.g., proportion infected given a positive test), you have to know the probability that the hypothesis was true without any data.
+
+Why is this the case? It is a simple consequence of the definition of a conditional probability, formulated as Bayes' Rule. Specifically, the joint probability of two events, call them A and B, is defined as:
+𝑝(𝐴𝑎𝑛𝑑𝐵)=𝑝(𝐴)×𝑝(𝐵|𝐴) 
+𝑝(𝐵𝑎𝑛𝑑𝐴)=𝑝(𝐵)×𝑝(𝐴|𝐵) 
+
+Now, calling A the Hypothesis and B the Data, then rearranging, we get:
+𝑝(𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠|𝐷𝑎𝑡𝑎)=𝑝(𝐷𝑎𝑡𝑎|𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠)×𝑝(𝐻𝑦𝑝𝑜𝑡ℎ𝑒𝑠𝑖𝑠)𝑝(𝐷𝑎𝑡𝑎) 
+
+So you cannot calculate the probability of the hypothesis, given the data (i.e., the Bayesian posterior), without knowing the probability of the hypothesis independent of any data (i.e., the prior)
+```{r}
+infected_proportions <- seq(from = 0, to = 1, by = 0.1)
+
+for(n in infected_proportions){
+     # Simulate # infections in the SAMPLE, given the POPULATION rate
+     is_infected = rbinom(1, N, n)
+    
+      #Account for false positive rate being grater than 0
+     is_positive <- is_infected + rbinom(1, (N - is_infected), false_positive_rate)
+     
+      # The probability that someone with a positive test is infected
+      p_is_infected_given_is_positive <- ((is_positive - (is_positive - is_infected)) / is_positive)
+      
+      
+      # We can compute the Bayesian Posterior as:
+      # p(hypothesis | data) = (p(data | hypothesis) * p(hypothesis)) / p(data)
+      # Note that we are using the true rate from the full POPULATION, so these predictions will differ slightly from the probability computed above (pIsInfectedGivenIsPositiveTest) from the SAMPLE
+      
+       p_data_given_hypothesis <- 1 - false_negative_rate
+       p_hypothesis <- n
+       p_data <- is_positive/N   
+       p_hypothesis_given_data <- (p_data_given_hypothesis * p_hypothesis) / p_data
+    
+      # Compute the theoretial posterior probability: 
+      cat("Infection rate =", n, ", proportion infected given a positive test =", p_is_infected_given_is_positive, ", Posterior=", p_hypothesis_given_data, "\n")
+
+}
+```
+
