@@ -48,7 +48,7 @@ AutoML with TPOT
 
 QNC [syllabus](https://canvas.upenn.edu/courses/1358934/assignments/syllabus), [lecture notes](https://canvas.upenn.edu/courses/1358934/files/folder/Courses/Quantitative%20Neuro%20Core/Lessons), and [readings](https://canvas.upenn.edu/courses/1358934/files/folder/Courses/Quantitative%20Neuro%20Core/Readings).
 
-## Credits
+### Credits
 
 Copyright 2022 by Joshua I. Gold  
 [Neuroscience Graduate Group](https://www.med.upenn.edu/ngg/)  
