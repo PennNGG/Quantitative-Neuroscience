@@ -1,4 +1,9 @@
-# Statistics
-helpful code for solving statistical problems
+## Statistics
 
-Developed by and for the Neuroscience Graduate Group (NGG) at the University of Pennsylvania
+Lessons and code for using statisitical/quantitative approaches to analyze neuroscience data.
+
+### Credits
+
+Copyright 2022 by Joshua I. Gold  
+Neuroscience Graduate Group (https://www.med.upenn.edu/ngg/)  
+University of Pennsylvania
