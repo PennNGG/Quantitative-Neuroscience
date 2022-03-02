@@ -2,9 +2,9 @@
 
 Lessons and code for using quantitative approaches to analyze and interpret neuroscience data.
 
-Contents:
+### Contents:
 
-###Concepts  
+#### Concepts  
 Confidence Intervals and Bootstrapping  
 Descriptive Statistics  
 Error Types, P-Values, False-Positive Risk, and Power Analyses  
@@ -15,7 +15,7 @@ Parametric vs. Nonparametric Statistics
 Samples and Populations  
 Glossary
 
-###Hypothesis Testing  
+#### Hypothesis Testing  
 ANOVA  
 Exact Binomial Test  
 Proportions  
@@ -23,13 +23,13 @@ Simple Nonparametric Tests
 t-Tests  
 Z-Test
 
-###Measures of Association  
+#### Measures of Association  
 Overview  
 Linear Regression  
 Nonparametric Correlation Coefficient  
 Parametric Correlation Coefficient
 
-###Probability Distributions  
+#### Probability Distributions  
 Overview  
 Bernoulli Distribution  
 Binomial Distribution  
@@ -38,13 +38,14 @@ Gaussian (Normal) Distribution
 Poisson Distribution  
 Student's t Distribution
 
-###Data  
+#### Data  
 Nonnegative Matrix Factorization (NMF)
 
-###Machine Learning  
+#### Machine Learning  
 AutoML with TPOT
 
-## For Penn NGG members
+### For Penn NGG members
+
 QNC [syllabus](https://canvas.upenn.edu/courses/1358934/assignments/syllabus), [lecture notes](https://canvas.upenn.edu/courses/1358934/files/folder/Courses/Quantitative%20Neuro%20Core/Lessons), and [readings](https://canvas.upenn.edu/courses/1358934/files/folder/Courses/Quantitative%20Neuro%20Core/Readings).
 
 ## Credits
