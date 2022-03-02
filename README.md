@@ -8,5 +8,5 @@ QNC [syllabus](https://canvas.upenn.edu/courses/1358934/assignments/syllabus), [
 ### Credits
 
 Copyright 2022 by Joshua I. Gold  
-]Neuroscience Graduate Group](https://www.med.upenn.edu/ngg/)  
+[Neuroscience Graduate Group](https://www.med.upenn.edu/ngg/)  
 University of Pennsylvania
