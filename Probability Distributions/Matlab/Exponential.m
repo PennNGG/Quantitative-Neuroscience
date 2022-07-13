@@ -1,6 +1,6 @@
 %% Exponential distribution
 %
-%  Colab: https://colab.research.google.com/drive/1Qb-1c31Yz8puWrCoXRGMrmLBYlI6puLg?usp=sharing
+%  Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Probability%20Distributions/Python/Exponential.ipynb
 %
 % This distribution describes the frequency of occurrence of CONTINUOUS
 %  events that decays exponentially with larger values.

@@ -1,6 +1,6 @@
 %% Normal (Gaussian) distribution
 %
-% Colab: https://colab.research.google.com/drive/1-KxH3FCq5rDyyO33HXxewIv-kKldkINi#scrollTo=Z32Do1n-bkQ9
+% Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Probability%20Distributions/Python/Gaussian%20(Normal).ipynb
 %
 % This is another CONTINOUS distribution that describes the relative 
 %  frequencies of occurrence of continuous values following a bell-shaped

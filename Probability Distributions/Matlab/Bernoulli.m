@@ -1,6 +1,6 @@
 %% Bernoulli distribution
 %
-% Colab: https://colab.research.google.com/drive/1h5EoxuqTrJGylVdRNCo0MzRPkr2JE_cH?usp=sharing
+% Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Probability%20Distributions/Python/Bernoulli.ipynb
 %
 % A single Bernoulli trial: 
 %  outcome = 1 with probabilty p

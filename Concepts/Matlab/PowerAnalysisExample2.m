@@ -1,5 +1,7 @@
 % Power Analysis Example 2 (Joshi et al, 2016)
 %
+% Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Concepts/Python/Error%20Types%2C%20P-Values%2C%20False-Positive%20Risk%2C%20and%20Power%20Analysis.ipynb
+%
 % Copyright 2020 by Joshua I. Gold, University of Pennsylvania
 
 % Create a null distribution of "no relationship between LC spike rate and

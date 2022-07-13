@@ -1,6 +1,6 @@
 %% Poisson distribution
 %
-% Colab: https://colab.research.google.com/drive/1kaJC9Xw6fPqiZYwMbA484F7PDwsFQenX?usp=sharing
+% Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Probability%20Distributions/Python/Poisson.ipynb
 %
 % The Poisson distribution is closely related to the binomial distribution.
 % In both cases, they measure the number of "successes" (or binary events)

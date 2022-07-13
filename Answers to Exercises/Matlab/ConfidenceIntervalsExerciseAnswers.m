@@ -1,20 +1,7 @@
 % Confidence Intervals and Bootstrapping
+%  Answers to Exercise found here:
 %
-% To use this tutorial, read the commands and
-%  execute the code line-by-line.
-%
-% The learning objective is to understand how to compute confidence 
-% intervals (known as credible intervals when using Bayesian approaches),
-% which are a fundamental piece of rigorous, quantitative science beacuse
-% they describe the uncertainty that you have in estimating some property
-% of the world given noisy, finite observations.
-%
-% For NGG students, this tutorial is meant to be used in tandem with this
-% Discussion on the NGG Canvas site:
-%
-%  https://canvas.upenn.edu/courses/1358934/discussion_topics/5464266
-%
-% Copyright 2019 by Joshua I. Gold, University of Pennsylvania
+%  https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Concepts/Python/Confidence%20Intervals%20and%20Bootstrapping.ipynb
 
 % Exercise: Compute confidence/credible intervals for simulated data 
 %  sampled from a population that is Gaussian distributed with mean mu=10 

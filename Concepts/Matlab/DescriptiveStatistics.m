@@ -1,6 +1,6 @@
 %% Descriptive statistics
 %
-% Colab: https://colab.research.google.com/drive/1R26jZt5UmttyMWS2Aucb-wD-JSRBDYPt#scrollTo=Z32Do1n-bkQ9
+% Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Concepts/Python/Descriptive%20Statistics.ipynb
 %
 % Simple examples to compute central tendencies, dispersion, and shapes
 %   of samples of data%

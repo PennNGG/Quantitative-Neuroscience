@@ -1,5 +1,8 @@
 % Frequentist versus Bayesian Statistics
 %
+% Python:
+%   https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Concepts/Python/Frequentist%20Versus%20Bayesian%20Approaches.ipynb
+
 % To use this tutorial, read the commands and execute the code line-by-line.
 %
 % The learning objective is to gain insights into thinking about inference
@@ -12,11 +15,6 @@
 % is true?" In contrast, Bayesians consider the probabilities of such
 % things (often called the strength of belief), but doing so can require
 % making assumptions that can be difficult to prove.
-%
-% For NGG students, this tutorial is meant to be used in tandem with this
-% Discussion on the NGG Canvas site:
-%
-% https://canvas.upenn.edu/courses/1358934/discussion_topics/5440322
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
@@ -36,15 +34,17 @@ falsePositiveRate = 0.05;
 %  result despite the fact that the person DOES have HIV
 falseNegativeRate = 0;
 
-%% Question #1: If someone gets a positive test, is it "statistically
+% Answers to the exercises below will be found at:
+%   https://github.com/PennNGG/Quantitative-Neuroscience/tree/master/Answers%20to%20Exercises/Matlab
+% after the due date.
+
+%% Exercise #1: If someone gets a positive test, is it "statistically
 % significant"?
 
-%% Question #2: What is the probability that if someone gets a positive
+%% Exercise #2: What is the probability that if someone gets a positive
 %  test, that person is infected?
 
-% For answers, see <add link>
-
-%% Following from Question #2, let's do the same thing, 
+%% Following from Exercise #2, let's do the same thing, 
 % but this time we will try different values for 
 % the proportion of the population that is actually infected. What you
 % should notice is that the PROPORTION INFECTED GIVEN A POSITIVE TEST
