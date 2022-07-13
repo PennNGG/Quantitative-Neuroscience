@@ -1,7 +1,5 @@
-function LinearRegressionExercises
-%
 % Answers to exercises found here: 
-%  https://colab.research.google.com/drive/1woS2_MwJBU-LJuT5tlCrB2ve4jv8T3Xk?usp=sharing 
+%  https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Measures%20of%20Association/Linear%20Regression.ipynb
 %
 % Copyright 2019 by Yale E. Cohen, University of Pennsylvania
 %  Updated 07/21/21 by jig

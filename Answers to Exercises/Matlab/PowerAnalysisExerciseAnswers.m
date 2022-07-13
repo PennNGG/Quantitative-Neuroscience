@@ -1,4 +1,5 @@
-% Power Analysis Example 2 (Joshi et al, 2016)
+% Power Analysis Example (Joshi et al, 2016)
+%   Answers to exersises
 %
 % Python: https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Concepts/Python/Error%20Types%2C%20P-Values%2C%20False-Positive%20Risk%2C%20and%20Power%20Analysis.ipynb
 %
@@ -19,6 +20,7 @@ for ii = 1:numExperiments
    corrs(ii) = corr(spikeRates(:,ii), pupils(:,ii), 'type', 'Spearman');
 end
 
+% Show the histogram of the simulated null distribution
 histogram(corrs, 50);
 xlabel('Correlation coefficients');
 ylabel('Count');
