@@ -1,6 +1,6 @@
 % Parametric Correlations
 % Answers to exercises found here: 
-%  
+%   https://github.com/PennNGG/Quantitative-Neuroscience/blob/master/Measures%20of%20Association/Parametric%20Correlation%20Coefficient.ipynb  
 %
 % Copyright 2019 by Yale E. Cohen, University of Pennsylvania
 %  Updated 01/01/20 by jig
