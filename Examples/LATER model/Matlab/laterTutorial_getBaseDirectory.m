@@ -9,5 +9,6 @@ function baseDirectory_ = laterTutorial_getBaseDirectory
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
 % Data directory
-baseDirectory_ = fullfile('~jigold', 'GoldWorks', 'Mirror_jigold', ...
-   'Teaching', 'NeuroCore', 'Modules', 'LATER');
+baseDirectory_ = fullfile('~jigold', 'Library', 'CloudStorage', ...
+   'Box-Box', 'NeuroCore', 'LATERdata');
+

@@ -1,4 +1,4 @@
-% laterTutorial_plotRawData
+% laterTutorial_plot
 %
 % Tutorial for examining raw RT data from Kim et al, J Neuroscience (example from 
 %  Figure 2) in reciprobit form
@@ -50,7 +50,7 @@
 SUBJECT_TAG = 'JT';
 
 % Load the data from that subject, given the base directory
-load(fullfile(laterTutorial_getBaseDirectory, 'data', 'data_mgl', 'F', ...
+load(fullfile(laterTutorial_getBaseDirectory, 'data_mgl', 'F', ...
    [SUBJECT_TAG '_RT.mat']));
 
 %% Plot RT distribution

@@ -46,9 +46,8 @@ opts = optimoptions(@fmincon,    ... % "function minimization with constraints"
 SUBJECT_TAG = 'JT';
 
 % Load the data from that subject, given the base directory
-%load(fullfile(laterTutorial_getBaseDirectory, 'data', 'data_mgl', 'F', ...
-%   [SUBJECT_TAG '_RT.mat']));
-load('JT_RT.mat');
+load(fullfile(laterTutorial_getBaseDirectory, 'data_mgl', 'F', ...
+   [SUBJECT_TAG '_RT.mat']));
 
 % Select the appropriate data (see scriptLATER_rawData for details)
 %  C_L,0:  Left choices, change-point trials
