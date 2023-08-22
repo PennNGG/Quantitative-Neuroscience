@@ -1,5 +1,5 @@
-function later_plot(rts, fits, ax, xlm, color)
-% function later_plot(rts, fits, ax, xlm, color)
+function later_plotReciprobit(RTs, fits, ax, xLimits, color)
+% function later_plotReciprobit(RTs, fits, ax, xlm, color)
 %
 % fits are muR, deltaS
 % rts are in SECONDS
@@ -12,7 +12,8 @@ function later_plot(rts, fits, ax, xlm, color)
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
-if nargin < 1 || isempty(rts)
+% Using backwards-compatible error checking
+if nargin < 1 || isempty(RTs)
    return
 end
 
@@ -23,23 +24,33 @@ else
    axes(ax);
 end
 
-if nargin < 4 || isempty(xlm)
-   xlm = [0.1 1];
+if nargin < 4 || isempty(xLimits)
+   xLimits = [0.1 1];
 end
 
 if nargin < 5 || isempty(color)
    color = 'k';
 end
 
-% get transformed data
-[xs,ys] = later_xys(rts);
+% get transformed data:
+sortedRTs = sort(RTs);
+nRTs = length(sortedRTs);
+Lgood = diff([-999; sortedRTs])~=0;
+
+% xs are just 1/sorted(RTs), after removing duplicates
+xs = 1./sortedRTs(Lgood);
+
+% ys are probit values of sorted(RTs); i.e., the z-scores of the
+%       associated cumulative probabilities 
+cumulativeProbabilites = ((1:nRTs)./nRTs)'; % These are t
+ys = norminv(cumulativeProbabilites(Lgood),0,1);
 
 % plot raw data, make axes real purdy
 plot(-xs, ys, '.', 'Color', color);
 
 % Label axes with RT (x) and probability (y) values that make sense, but
 % corresond to actual -1/RT (x) and probit (y) values that are plotted
-XTICK  = 10.^(linspace(log10(xlm(1)), log10(xlm(2)), 4));
+XTICK  = 10.^(linspace(log10(xLimits(1)), log10(xLimits(2)), 4));
 YTICK  = [.1 1 5 10 50 90 95 99 99.9];
 YTICKi = norminv(YTICK./100,0,1);
 
@@ -56,6 +67,6 @@ ylabel('Probability');
 
 % possibly show fits
 if nargin > 1 && ~isempty(fits)
-   fxs = -1./xlm;
+   fxs = -1./xLimits;
    plot(fxs, (fxs+fits(1)/fits(2)).*fits(2), '-', 'Color', color);
 end

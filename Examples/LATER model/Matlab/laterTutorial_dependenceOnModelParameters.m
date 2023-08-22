@@ -1,4 +1,4 @@
- % laterTutorial_modelParameters
+ % laterTutorial_dependenceOnModelParameters
 %
 % Script for examining LATER model parameters
 %
@@ -37,7 +37,7 @@ figure
 muR = 4;
 stdR = 1;
 
-% 2. The distance from the starting point to the threshold;\
+% 2. The distance from the starting point to the threshold
 %
 %     Again, pick a value that we happen to know will give us reasonable RT
 %     predictions

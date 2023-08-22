@@ -1,4 +1,4 @@
-% laterTutorial_plot
+% laterTutorial_plotExampleData
 %
 % Tutorial for examining raw RT data from Kim et al, J Neuroscience (example from 
 %  Figure 2) in reciprobit form
@@ -23,47 +23,13 @@
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
 %% 1. Load the raw data
-%
-%
-%   Each raw data file in data/data_mgl/F has the following vectors (in 
-%    each case, columns are individual trials):
-%     - decisionSum takes -1 if the decision was left side, and 1 if the 
-%        decision was right side.
-%     - labelSum takes 1 for trials after change point (TACP) 0, and 2 
-%        for TACP 1, and 3 for TACP 2, and 4 for TACP 3, and 5 for TACP 4, 
-%        and 0 for the rest. [NOTE FROM JIG: THIS IS HOW MY STUDENT TIM KIM
-%        CODED THE DATA, SO I WANT TO KEEP IT IN THIS RAW FORMAT. HOWEVER, 
-%        PLEASE NOTE THAT THIS CODING SCHEME SEEMS OVERLY CONFUSING; I
-%        WOULD HAVE CODED IT AS 0 FOR TACP=0, 1 FOR TACP=1, ETC]
-%     - numdirSum takes -1 if the sound was left side, and 1 if the sound 
-%        was right side.
-%     - percorrSum is 0 if the subject's answer was incorrect, and 1 
-%        if the subject's answer was correct.
-%     - syncSum is 1 if the current trial is a "pupil trial" and 0 if 
-%        the current trial is "RT trial" [NOTE FROM JIG: IGNORED HERE]
-%     - tRxnSum is RT measured by mglGetSecs, where the RT is defined 
-%        as the time when the eyes leave the fixation window. 
-%        The fixation window was defined as 30% of the height and width of 
-%        the screen (32.31cm x 51.69cm).
-
-% Use a particular subject tag
-SUBJECT_TAG = 'JT';
-
-% Load the data from that subject, given the base directory
-load(fullfile(laterTutorial_getBaseDirectory, 'data_mgl', 'F', ...
-   [SUBJECT_TAG '_RT.mat']));
+[data, labels] = later_getData();
 
 %% Plot RT distribution
 %
 %
 % Open a figure
 figure
-
-% Define selection criteria ("L" for "logical array"):
-%  1. Correct trials only (basic LATER model doesn't account for errors)
-%  2. Remove outlier RTs (need to check with Tim Kim about the conditions
-%        that gave rise to super-long RTs of ~4 s)
-Ltrials = percorrSum == 1 & tRxnSum < 1.2;
 
 % Binning for RT and 1/RT plots
 rtBins  = 0:0.02:1.2;
@@ -79,7 +45,7 @@ rrtBins = 0:0.2:10.0; % cutting off long tail of express saccades
 %     left of the mode; and then overall a long tail to the right,
 %     indicating quite a few longer RT trials
 subplot(5,2,1); cla reset; hold on;
-laterTutorial_plotHistogram(tRxnSum(Ltrials), rtBins, 'RT (sec)')
+later_plotHistogram([data{:}], rtBins, 'RT (sec)')
 
 %  RIGHT: Inverse RT distribution
 %  To see that the long tail on the right is roughly equivalent to an
@@ -87,31 +53,18 @@ laterTutorial_plotHistogram(tRxnSum(Ltrials), rtBins, 'RT (sec)')
 %     saccades are a long tail to the right, and otherwise the distribution
 %     looks pretty close to Gaussian
 subplot(5,2,2); cla reset; hold on;
-laterTutorial_plotHistogram(1./tRxnSum(Ltrials), rrtBins, '1/RT (sec)')
-
-% Now loop through and plot for subjets of trials corresponding to (see Fig. 2
-%  in Kim et al):
-%  C_L,0:  Left choices, change-point trials
-%  C_L,1+: Left choices, non-change-point trials
-%  C_R,0:  Right choices, change-point trials
-%  C_R,1+: Right choices, non-change-point trials
-labels = {'C_L_,_0', 'C_L_,_1_+', 'C_R_,_0', 'C_R_,_1_+'};
-LtrialSubsets = [ ...
-   Ltrials & numdirSum == -1 & labelSum == 1; ...
-   Ltrials & numdirSum == -1 & labelSum ~= 1; ...
-   Ltrials & numdirSum ==  1 & labelSum == 1; ...
-   Ltrials & numdirSum ==  1 & labelSum ~= 1];
+later_plotHistogram(1./[data{:}], rrtBins, '1/RT (sec)')
 
 % Loop
 for ii = 1:length(labels)
    
    % Plot RT distribution on the left
    subplot(5,2,3+(ii-1)*2); cla reset; hold on;
-   laterTutorial_plotHistogram(tRxnSum(LtrialSubsets(ii,:)), rtBins, labels{ii});
+   later_plotHistogram(data{ii}, rtBins, labels{ii});
    
    % Plot 1/RT distribution on the right
    subplot(5,2,4+(ii-1)*2); cla reset; hold on;
-   laterTutorial_plotHistogram(1./tRxnSum(LtrialSubsets(ii,:)), rrtBins, labels{ii});   
+   later_plotHistogram(1./data{ii}, rrtBins, labels{ii});   
 end
 
 % Add labels at bottom
@@ -129,7 +82,7 @@ xlabel('1/RT (sec)');
 figure
 
 % Get and sort an example RT distribution
-rts = tRxnSum(LtrialSubsets(1,:));
+rts = data{1};
 rtsSorted = sort(rts);
 
 % Compute empirical cumulative RT probabilities
@@ -215,6 +168,9 @@ figure
 cla reset; hold on; grid on;
 colors = {'b' 'r' 'y' 'm'};
 
+% Now add an expressCutoff to visualize (in sec)
+expressCutoff = 0.2;
+
 % Loop through all four data sets
 plotHandles = nans(length(labels), 1);
 for ii = 1:length(labels)
@@ -223,7 +179,7 @@ for ii = 1:length(labels)
    % https://github.com/PennNGG/Statistics/tree/master/LATER%20model
    %
    % Get sorted rts
-   rtsSorted = sort(tRxnSum(LtrialSubsets(ii,:)));
+   rtsSorted = sort(data{ii});
 
    % Compute empirical cumulative RT probabilities on probit scale
    n = length(rtsSorted);
@@ -231,7 +187,7 @@ for ii = 1:length(labels)
    probitCumulativeProbabilities = norminv(cumulativeProbabilities,0,1);
 
    % Plot it, using separate markers for express/non-express saccades
-   Lexpress = rtsSorted < expressCutoff/1000;
+   Lexpress = rtsSorted < expressCutoff;
    plot(-1./rtsSorted(Lexpress), ...
       probitCumulativeProbabilities(Lexpress), 'x', 'Color', colors{ii}, ...
       'MarkerSize', 10);

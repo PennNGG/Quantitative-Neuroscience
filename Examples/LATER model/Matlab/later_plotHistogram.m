@@ -1,5 +1,5 @@
-function laterTutorial_plotHistogram(data, bins, label)
-% function laterTutorial_plotHistogram(data, bins, label)
+function later_plotHistogram(data, bins, label)
+% function later_plotHistogram(data, bins, label)
 % 
 % Utility for plotting RT (or 1/RT) distributions) in a common format
 %  into the current axes
