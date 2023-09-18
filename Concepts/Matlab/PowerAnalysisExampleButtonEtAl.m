@@ -146,7 +146,7 @@ plot(newSEM2.*[1 1], [0 0.8], 'r-', 'LineWidth', 2);
 plot([0 newSEM2], [0.8 0.8], 'r-', 'LineWidth', 2);
 plot(newSEM, 0.8, 'go', 'MarkerFaceColor', 'g', 'MarkerSize', 10);
 xlabel('sem');
-ylabel('probability false negative');
+ylabel('probability true positive');
 
 % Now do the simulated experiments as above, but with the new distributions
 outcomes = normrnd(mu1, newSEM, N, 1);
