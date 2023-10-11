@@ -94,10 +94,10 @@ ylabel('Cum prob');
 %  2. The y-axis is labeled as probability but really is z-score (note the
 %     scaling)
 %  3. And of course, the point of the LATER model is that:
-%     RT = deltaS/riseRate, or
+%     RT = deltaS/riseRate, or1/deltaS
 %     -1/RT = -riseRate/deltaS, where
 %     -riseRate ~N(-muR, stdR), or, equivalently,
-%     -1/RT ~N(-muR/deltaS, 1/deltaS)
+%     -1/RT ~N(-muR/deltaS, )
 %
 %  Now let's visualize this better on each plot:
 for xx = 1:2
