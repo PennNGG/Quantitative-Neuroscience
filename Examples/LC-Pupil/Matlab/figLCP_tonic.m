@@ -21,7 +21,7 @@ cols                  = {5,5,5,1};     % number of columns per row
 figureNum             = 3;
 panelSeparationHeight = 2;             % in cm
 panelSeparationWidth  = 0.5;           % in cm
-[axs,~] = getPLOT_axes(figureNum, wid, hts, cols, ...
+[axs,~] = getPLOT_axes(figureNum, 11.6, hts, cols, ...
    panelSeparationHeight, panelSeparationWidth, [], 'Joshi et al', true);
 set(axs,'Units','normalized');
 
