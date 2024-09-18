@@ -197,7 +197,7 @@ end
 %% Exercise 4
 %
 % Note that like good Matlab programmers, we'll do this without loops
-counts = [0	0 3 10 19 26 16 16 5 5 0 0 0 0 0]; % The experimental outcomes
+counts = [0	0 3 7 10 19 26 16 16 5 5 0 0 0 0]; % The experimental outcomes
 n = length(counts)-1;   % Number of available quanta in each experiment
 ks = 0:n;               % Possible values of k, as a row vector
 nks = length(ks);       % Length of k
@@ -206,14 +206,14 @@ nps = length(ps);       % Length of p
 
 % Compute the value of the binomial distribution for each possible value of 
 %  k, n, p. Make a matrix in which:
-%     - columns correspond to different values of p
-%     - rows correspond to different values of k
+%     - rows correspond to different values of p
+%     - columns correspond to different values of k
 probs = binopdf( ...
    repmat(ks, nps, 1), ...    % Repeat ks-row vector for each p
    n, ...                     % Always assuming the same 'n'
    repmat(ps, 1, nks));       % Repeat ps-column vector for each k
 
-% Make a matrix of outcomes (in rows) that are repeated along the columns so we can
+% Make a matrix of outcomes (in columns) that are repeated along the rows so we can
 % use them to compute likelihoods for each possible value of release probability (p)
 countsMatrix = repmat(counts, nps, 1);
 
