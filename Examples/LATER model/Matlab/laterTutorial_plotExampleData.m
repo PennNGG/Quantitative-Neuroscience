@@ -172,7 +172,7 @@ colors = {'b' 'r' 'y' 'm'};
 expressCutoff = 0.2;
 
 % Loop through all four data sets
-plotHandles = nans(length(labels), 1);
+plotHandles = nan(length(labels), 1);
 for ii = 1:length(labels)
    
    % Do it by hand. Also could use utilities found here:
