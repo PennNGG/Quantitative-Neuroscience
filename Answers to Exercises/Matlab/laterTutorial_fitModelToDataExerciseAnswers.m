@@ -29,43 +29,33 @@ global reciprocalRTs
 %  corresponding to Fig. 2, Kim et al, J Neuroscience
 [data, labels] = later_getData([], [], 0.2);
 
-%% Set up fitting
+%% Preallocate matrix to save the fits
 %
-% We will use the same fitting procedure on a bunch of data sets, so we set
-%  the options here. We will be using GlobalSearch. The general
-%  advantage of this approach is to avoid local minima; for details, see:
-%  https://www.mathworks.com/help/gads/how-globalsearch-and-multistart-work.html
-%  
-% These options seem to work well, but I don't have a stronger
-%  rationale for using them. See the Matlab documentation if you really
-%  want to dive in and understand them, and let me know if you find
-%  better settings!
-opts = optimoptions(@fmincon,    ... % "function minimization with constraints"
-   'Algorithm',   'active-set',  ...
-   'MaxIter',     3000,          ...
-   'MaxFunEvals', 6000);
+% fits = nan(length(labels), 2);
 
-% Save the fits
-fits = nan(length(labels), 2);
-
-% Open a figure
-figure
+%% Open and set up a figure
+%   show it as a subplot
 subplot(2,1,1); hold on;
 
 % Use these colors for plotting the four conditions
 colors = {'b' 'r' 'y' 'm'};
 
-% Loop through each data set
+%% Loop through each data set
+%
 for ii = 1:length(labels)
 
    % Get the data, convert to reciprocal RT in column vector
    reciprocalRTs = 1./data{ii}';
    
    % Pick initial values, using empirical mean/std of reciprocal RTs
-   deltaS0 = 1; %1/std(reciprocalRTs);
-   muR0 = 1; %mean(reciprocalRTs)*deltaS0;
+   muR0 = 1; % mean(reciprocalRTs);
+   deltaS0 = 1; %1./std(reciprocalRTs);
    
-   % Define the objective function. This could be set up as Matlab
+   % We will be using GlobalSearch. The general
+   %  advantage of this approach is to avoid local minima; for details, see:
+   %  https://www.mathworks.com/help/gads/how-globalsearch-and-multistart-work.html
+   %
+   %  First define the objective function. This could be set up as Matlab
    %  function, as it is here:
    %  https://github.com/TheGoldLab/Lab_Matlab_Utilities/blob/master/reciprobit/reciprobit_err.m
    %
@@ -88,15 +78,15 @@ for ii = 1:length(labels)
    %  c. Sum them all together
    %  d. Take the negative, because fmincon finds the minimum (thus
    %        corresponding to the maximum likelihood)
-   %laterErrFcn = @(fits) -sum(log(normpdf(reciprocalRTs, fits(1)/fits(2), 1/fits(2))));
+   laterErrFcn = @(fits) -sum(log(normpdf(reciprocalRTs, fits(1)./fits(2), 1./fits(2))));
 
    % Set up the optimization problem
    problem = createOptimProblem('fmincon',    ...
       'objective',   @laterErrFcn,      ... % Use the objective function
-      'x0',          [deltaS0 muR0],   ... % Initial conditions
-      'lb',          [0.001 0.001],    ... % Parameter lower bounds
+      'x0',          [muR0 deltaS0],   ... % Initial conditions
+      'lb',          [0    0],    ... % Parameter lower bounds
       'ub',          [1000 1000],      ... % Parameter upper bounds
-      'options',     opts);                % Options defined above
+      'options',     optimoptions(@fmincon));  % fitting options
 
    % Create a GlobalSearch object
    gs = GlobalSearch;
@@ -107,7 +97,7 @@ for ii = 1:length(labels)
    
    % Plot using our utility function, which expects RT in msec
    later_plotReciprobit(1./reciprocalRTs, fits(ii,:), gca, [], colors{ii})
-
+   
    % Compare fit values to sample statistics
    fprintf('SET 1:\nmu: fit=%.2f, ss=%.2f\nstd: fit=%.2f, ss=%.2f', ...
        fits(ii,1)./fits(ii,2), mean(reciprocalRTs), ...
