@@ -29,9 +29,16 @@ global reciprocalRTs
 %  corresponding to Fig. 2, Kim et al, J Neuroscience
 [data, labels] = later_getData([], [], 0.2);
 
+%% fmincon options
+%
+opts = optimoptions(@fmincon,    ... % "function minimization with constraints"
+   'Algorithm',   'active-set',  ...
+   'MaxIter',     300,          ...
+   'MaxFunEvals', 300);
+
 %% Preallocate matrix to save the fits
 %
-% fits = nan(length(labels), 2);
+fits = nan(length(labels), 2);
 
 %% Open and set up a figure
 %   show it as a subplot
@@ -48,8 +55,8 @@ for ii = 1:length(labels)
    reciprocalRTs = 1./data{ii}';
    
    % Pick initial values, using empirical mean/std of reciprocal RTs
-   muR0 = 1; % mean(reciprocalRTs);
-   deltaS0 = 1; %1./std(reciprocalRTs);
+   muR0 = 10; %mean(reciprocalRTs);
+   deltaS0 = 5; %1./std(reciprocalRTs);
    
    % We will be using GlobalSearch. The general
    %  advantage of this approach is to avoid local minima; for details, see:
@@ -86,20 +93,21 @@ for ii = 1:length(labels)
       'x0',          [muR0 deltaS0],   ... % Initial conditions
       'lb',          [0    0],    ... % Parameter lower bounds
       'ub',          [1000 1000],      ... % Parameter upper bounds
-      'options',     optimoptions(@fmincon));  % fitting options
+      'options',     opts);  % fitting options
 
    % Create a GlobalSearch object
    gs = GlobalSearch;
-   
+
    % Run it, returning the best-fitting parameter values and the negative-
    % log-likelihood returned by the objective function
+   tic
    [fits(ii,:), nllk] = run(gs,problem);
-   
+   toc
    % Plot using our utility function, which expects RT in msec
    later_plotReciprobit(1./reciprocalRTs, fits(ii,:), gca, [], colors{ii})
    
    % Compare fit values to sample statistics
-   fprintf('SET 1:\nmu: fit=%.2f, ss=%.2f\nstd: fit=%.2f, ss=%.2f', ...
+   fprintf('SET 1:\nmu: fit=%.2f, ss=%.2f\nstd: fit=%.2f, ss=%.2f\n', ...
        fits(ii,1)./fits(ii,2), mean(reciprocalRTs), ...
        1./fits(ii,2), std(reciprocalRTs))
 end
