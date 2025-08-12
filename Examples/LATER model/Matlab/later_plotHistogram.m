@@ -6,7 +6,7 @@ function later_plotHistogram(data, bins, label)
 %
 % Copyright 2019 by Joshua I. Gold, University of Pennsylvania
 
-hist(data, bins); % Last argument defines the bins, for visualization
+histogram(data, bins); % Last argument defines the bins, for visualization
 %ylabel('Count')
 %xlabel(label)
 
