@@ -17,8 +17,8 @@
 %% Compute p values
 %
 N = logspace(1,3,10);
-proportion = (0.7:0.005:1.0);  % proportion of significant handsome neurons
-ps = nan(length(N), length(proportion));
+Proportion = (0.7:0.005:1.0);  % proportion of significant handsome neurons
+ps = nan(length(N), length(Proportion));
 
 % We are testing two frequencies, so df = 2-1 = 1
 df=1;
@@ -26,15 +26,15 @@ df=1;
 % For each N (number of neurons)
 for ii=1:length(N)
     % For each proportion
-    for jj=1:length(proportion)
-        handsomeYale=proportion(jj).*N(ii); %i know you can't have fractions of neurons but we will do this here just for fun
-        nonHandsomeJosh=N(ii)-handsomeYale;
-        theoreticallyHandsome=0.95*N(ii);
-        theoreticallyNonHandsome=N(ii)-theoreticallyHandsome;
+    for jj=1:length(Proportion)
+        HandsomeYale=Proportion(jj).*N(ii); %i know you can't have fractions of neurons but we will do this here just for fun
+        NonHandsomeJosh=N(ii)-HandsomeYale;
+        TheoreticallyHandsome=0.95*N(ii);
+        TheoreticallyNonHandsome=N(ii)-TheoreticallyHandsome;
 
-        chiSquare=(handsomeYale-theoreticallyHandsome).^2/theoreticallyHandsome+...
-            (nonHandsomeJosh-theoreticallyNonHandsome)^2/theoreticallyNonHandsome;
-        ps(ii,jj)=1-chi2cdf(chiSquare,df);
+        ChiSquare=(HandsomeYale-TheoreticallyHandsome).^2/TheoreticallyHandsome+...
+            (NonHandsomeJosh-TheoreticallyNonHandsome)^2/TheoreticallyNonHandsome;
+        ps(ii,jj)=1-chi2cdf(ChiSquare,df);
     end
 end
 
@@ -46,10 +46,10 @@ figure
 cla reset; hold on;
 plot([70 100],[0.05 0.05],'-','color',[1 0 0])
 for ii=1:length(N)
-    plot(proportion.*100,ps(ii,:),'.-','markersize',15,'color',(ii-1)/length(N).*0.7.*ones(3,1));
+    plot(Proportion.*100,ps(ii,:),'.-','markersize',15,'color',(ii-1)/length(N).*ones(3,1));
 end
 text(85,.3,['N=' num2str(N(1))])
-text(94.5,.25,['N=' num2str(N(end))],'Color',(length(N)-1)./length(N).*0.7.*ones(3,1))
+text(94.5,.25,['N=' num2str(N(end))],'Color',0.99.*ones(3,1))
 text(72, 0.08, 'P=0.05', 'Color', 'r')
 set(gca,'fontsize',12);
 xlabel('Percentage of HandsomeYale neurons')
